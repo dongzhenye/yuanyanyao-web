@@ -3,7 +3,7 @@ import React from 'react'
 interface SearchTerm {
   id: number
   text: string
-  type: "通用名" | "商品名" | "厂商" | "简拼"
+  type: "通用名" | "商品名" | "厂商" | "简拼" | "拼音"
 }
 
 const HOT_TERMS: SearchTerm[] = [

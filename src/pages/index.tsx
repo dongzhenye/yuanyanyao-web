@@ -10,12 +10,18 @@ import type { SearchResultItem } from '@/lib/types'
 import { SearchResults } from '@/components/search/SearchResults'
 import { ActiveFilters } from '@/components/search/ActiveFilters'
 import { SearchTag } from '@/components/search/SearchTag'
+import { formatRegistrationType } from '@/lib/utils'
 
 // 添加筛选选项配置
 const FILTER_OPTIONS = {
   剂型: ['片剂', '胶囊', '肠溶片', '注射剂'],
   分类: ['化学药品', '生物制品'],
   注册: ['进口药', '国产药']
+}
+
+interface TagClickParams {
+  text: string
+  type?: string  // 添加可选的 type 属性
 }
 
 const Home: NextPage = () => {
@@ -52,10 +58,10 @@ const Home: NextPage = () => {
             type = "注册"
           }
           // 最后处理其他类型
-          else if (FILTER_OPTIONS.剂型.includes(formatRegistrationType(filter))) {
+          else if (FILTER_OPTIONS.剂型?.includes(filter)) {
             type = "剂型"
           }
-          else if (FILTER_OPTIONS.分类.includes(filter)) {
+          else if (FILTER_OPTIONS.分类?.includes(filter)) {
             type = "分类"
           }
           
@@ -92,7 +98,7 @@ const Home: NextPage = () => {
     }, 300)
   }, [activeFilters])
 
-  const handleTagClick = useCallback(({ text }: { text: string }) => {
+  const handleTagClick = useCallback(({ text, type }: TagClickParams) => {
     setActiveFilters(prev => {
       const newFilters = prev.includes(text)
         ? prev.filter(f => f !== text)

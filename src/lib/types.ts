@@ -1,3 +1,21 @@
+import type { FuseResultMatch } from 'fuse.js'
+
+// 定义拼音搜索字段类型
+interface PinyinSearch {
+  genericName: {
+    full: string
+    short: string
+  }
+  brandName: {
+    full: string
+    short: string
+  }
+  manufacturer: {
+    full: string
+    short: string
+  }
+}
+
 // 定义核心数据类型
 export interface Drug {
   // 基础信息
@@ -32,11 +50,17 @@ export interface Drug {
   lastUpdated: string // 最后更新日期
 }
 
+// 扩展带拼音的药品类型
+export interface DrugWithPinyin extends Drug {
+  searchPinyin: PinyinSearch
+}
+
 // 搜索结果项
-export interface SearchResultItem extends Drug {
-  score: number      // 搜索匹配分数
-  matches?: {        // 匹配详情
+export interface SearchResultItem extends DrugWithPinyin {
+  score: number
+  sortScore: number
+  matches: Array<{
     key: string
-    indices: number[][]
-  }[]
+    indices: Array<[number, number]>
+  }> | undefined
 } 

@@ -1,7 +1,9 @@
 import Fuse from 'fuse.js'
-import { Drug, SearchResultItem } from './types'
+import { Drug, DrugWithPinyin, SearchResultItem } from './types'
 import drugsData from '@/data/drugs.json'
 import { pinyin } from 'pinyin-pro'
+import type { FuseResult } from 'fuse.js'
+import { z } from 'zod'
 
 // 为每个药品添加拼音搜索字段
 const drugsWithPinyin = drugsData.drugs.map(drug => ({
@@ -21,7 +23,7 @@ const drugsWithPinyin = drugsData.drugs.map(drug => ({
       short: pinyin(drug.manufacturerName, { pattern: 'first', toneType: 'none' })
     }
   }
-}))
+})) as DrugWithPinyin[]
 
 const fuseOptions = {
   keys: [
@@ -52,30 +54,66 @@ const fuseOptions = {
   useExtendedSearch: true  // 启用扩展搜索
 }
 
-const fuse = new Fuse(drugsWithPinyin as Drug[], fuseOptions)
+const fuse = new Fuse(drugsWithPinyin, fuseOptions)
+
+// 定义数据验证schema
+const DrugSchema = z.object({
+  id: z.string(),
+  registrationType: z.enum(["境内生产药品", "境外生产药品"]),
+  identifier: z.string(),
+  inn: z.string().optional(),
+  genericName: z.string(),
+  productName: z.string(),
+  brandName: z.object({
+    cn: z.string(),
+    en: z.string().optional()
+  }),
+  category: z.enum(["化学药品", "生物制品", "中药", "天然药物"]),
+  formulation: z.string(),
+  specification: z.string(),
+  mahName: z.string(),
+  manufacturerName: z.string(),
+  isOriginal: z.boolean(),
+  originator: z.string(),
+  lastUpdated: z.string()
+})
+
+// 验证导入的数据
+const validatedDrugs = drugsData.drugs.map(drug => {
+  const result = DrugSchema.safeParse(drug)
+  if (!result.success) {
+    console.error('Invalid drug data:', drug, result.error)
+    throw new Error('Invalid drug data')
+  }
+  return result.data
+})
 
 export function searchDrugs(query: string): SearchResultItem[] {
   if (!query.trim()) return []
   
   const results = fuse.search(query)
   
-  // 优化排序规则
-  return results
-    .map(result => ({
+  return results.map(result => {
+    // 处理匹配结果
+    const processedMatches = result.matches?.map(match => ({
+      key: match.key || '',  // 确保 key 不为 undefined
+      indices: match.indices.map(([start, end]) => [start, end] as [number, number])  // 确保类型正确
+    }))
+
+    return {
       ...result.item,
       score: result.score || 1,
-      matches: result.matches,
-      // 添加额外的排序因素
+      matches: processedMatches,
       sortScore: calculateSortScore(result.item, result.score || 1)
-    }))
-    .sort((a, b) => {
-      // 首先按是否原研药排序
-      if (a.isOriginal !== b.isOriginal) {
-        return a.isOriginal ? -1 : 1
-      }
-      // 然后按匹配分数排序
-      return a.sortScore - b.sortScore
-    })
+    }
+  }).sort((a, b) => {
+    // 首先按是否原研药排序
+    if (a.isOriginal !== b.isOriginal) {
+      return a.isOriginal ? -1 : 1
+    }
+    // 然后按匹配分数排序
+    return a.sortScore - b.sortScore
+  })
 }
 
 function calculateSortScore(drug: Drug, searchScore: number): number {
@@ -94,6 +132,6 @@ function calculateSortScore(drug: Drug, searchScore: number): number {
   return score
 }
 
-export function getDrugById(id: string): Drug | null {
+export function getDrugById(id: string): DrugWithPinyin | null {
   return drugsWithPinyin.find(drug => drug.id === id) || null
 } 

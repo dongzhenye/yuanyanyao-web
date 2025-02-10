@@ -4,6 +4,7 @@ import type { SearchResultItem } from '@/lib/types'
 import { HighlightText } from './HighlightText'
 import { SearchTag } from './SearchTag'
 import { formatRegistrationType, formatBrandName } from '@/lib/utils'
+import type { FuseResultMatch } from 'fuse.js'
 
 interface SearchResultsProps {
   results: SearchResultItem[]
@@ -11,6 +12,11 @@ interface SearchResultsProps {
   searchTerm?: string
   onTagClick?: (tag: { text: string; type: string }) => void
   activeFilters?: string[]
+}
+
+const getMatches = (matches: SearchResultItem['matches'], key: string): ReadonlyArray<FuseResultMatch> => {
+  const match = matches?.find(m => m.key === key)
+  return match ? [{ indices: match.indices || [], key: match.key }] : []
 }
 
 export const SearchResults = ({ 
@@ -73,21 +79,19 @@ export const SearchResults = ({
               <h3 className="font-medium text-lg text-primary truncate">
                 <HighlightText 
                   text={drug.productName}
-                  matches={drug.matches?.find(m => m.key === 'productName')?.indices || []}
+                  matches={getMatches(drug.matches, 'productName')}
                 />
               </h3>
               <div className="mt-1 text-gray-600">
-                {drug.brandName.cn && (
-                  <HighlightText 
-                    text={formatBrandName(drug.brandName.cn, 'cn')}
-                    matches={drug.matches?.find(m => m.key === 'brandName.cn')?.indices || []}
-                  />
-                )}
+                <HighlightText 
+                  text={formatBrandName(drug.brandName.cn)}
+                  matches={getMatches(drug.matches, 'brandName.cn')}
+                />
                 {drug.brandName.en && (
                   <span className="text-gray-400 text-sm ml-2">
                     (<HighlightText 
                       text={formatBrandName(drug.brandName.en, 'en')}
-                      matches={drug.matches?.find(m => m.key === 'brandName.en')?.indices || []}
+                      matches={getMatches(drug.matches, 'brandName.en')}
                     />)
                   </span>
                 )}
@@ -95,7 +99,7 @@ export const SearchResults = ({
               <div className="mt-1 text-sm text-gray-500 truncate">
                 <HighlightText 
                   text={drug.manufacturerName}
-                  matches={drug.matches?.find(m => m.key === 'manufacturerName')?.indices || []}
+                  matches={getMatches(drug.matches, 'manufacturerName')}
                 />
               </div>
             </div>
