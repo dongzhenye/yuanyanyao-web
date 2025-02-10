@@ -1,0 +1,27 @@
+{
+  "drugs": [
+    {
+      "id": "1",
+      "registrationType": "境外生产药品",
+      "identifier": "H20130142",
+      "genericName": "布洛芬",
+      "productName": "布洛芬片",
+      "brandName": {
+        "cn": "芬必得",
+        "en": "Brufen"
+      },
+      "category": "化学药品",
+      "formulation": "片剂",
+      "specification": "0.2g",
+      "mahName": "利君制药",
+      "manufacturerName": "利君制药股份有限公司",
+      "isOriginal": true,
+      "originator": "Mylan",
+      "lastUpdated": "2024-03-20"
+    }
+  ],
+  "meta": {
+    "total": 1,
+    "lastUpdate": "2024-03-20T00:00:00.000Z"
+  }
+} 
