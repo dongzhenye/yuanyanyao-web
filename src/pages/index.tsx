@@ -65,18 +65,20 @@ const Home: NextPage = () => {
             type = "分类"
           }
           
-          acc[type] = acc[type] || []
+          // 初始化数组如果不存在
+          if (!acc[type]) {
+            acc[type] = []
+          }
           acc[type].push(filter)
           return acc
         }, {} as Record<string, string[]>)
-
-        console.log('Filters by type:', filtersByType) // 调试日志
 
         // 应用筛选逻辑
         searchResults = searchResults.filter(drug => {
           // 每种类型内部是OR，不同类型之间是AND
           return Object.entries(filtersByType).every(([type, filters]) => {
-            console.log(`Checking ${type}:`, filters) // 调试日志
+            if (!filters) return true  // 处理可能为 undefined 的情况
+            
             switch (type) {
               case "原研":
                 return drug.isOriginal
