@@ -47,7 +47,7 @@ const Home: NextPage = () => {
       // 应用标签筛选
       if (activeFilters.length > 0) {
         // 按类型分组筛选条件
-        const filtersByType = activeFilters.reduce((acc, filter) => {
+        const filtersByType = activeFilters.reduce<Record<string, string[]>>((acc, filter) => {
           let type = "其他"
           // 先处理原研药标签
           if (filter === "原研药") {
@@ -65,20 +65,16 @@ const Home: NextPage = () => {
             type = "分类"
           }
           
-          // 初始化数组如果不存在
-          if (!acc[type]) {
-            acc[type] = []
-          }
-          acc[type].push(filter)
+          // 确保类型安全的数组访问
+          acc[type] = acc[type] ?? []
+          acc[type]!.push(filter)  // 使用非空断言，因为我们已经确保了它存在
           return acc
-        }, {} as Record<string, string[]>)
+        }, {})
 
         // 应用筛选逻辑
         searchResults = searchResults.filter(drug => {
           // 每种类型内部是OR，不同类型之间是AND
           return Object.entries(filtersByType).every(([type, filters]) => {
-            if (!filters) return true  // 处理可能为 undefined 的情况
-            
             switch (type) {
               case "原研":
                 return drug.isOriginal
