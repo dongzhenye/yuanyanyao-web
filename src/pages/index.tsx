@@ -173,10 +173,12 @@ const HomePage: NextPage = () => {
     }
   }, [searchTerm, activeFilters])
   
-  // 如果我们要使用历史记录功能，需要添加一个历史记录按钮
+  // 处理历史记录点击
   const handleHistoryClick = useCallback(() => {
     if (searchHistory.length > 0) {
-      const lastSearch = searchHistory[searchHistory.length - 1]
+      const lastSearch = searchHistory[0] // 使用第一个元素，因为新的历史记录是添加到数组开头的
+      if (!lastSearch) return // 添加安全检查
+
       setSearchTerm(lastSearch.searchTerm)
       setActiveFilters(lastSearch.filters)
       handleSearch(lastSearch.searchTerm)
