@@ -2,7 +2,6 @@ import Fuse from 'fuse.js'
 import { Drug, DrugWithPinyin, SearchResultItem } from './types'
 import drugsData from '@/data/drugs.json'
 import { pinyin } from 'pinyin-pro'
-import type { FuseResult } from 'fuse.js'
 import { z } from 'zod'
 
 // 为每个药品添加拼音搜索字段
@@ -78,15 +77,18 @@ const DrugSchema = z.object({
   lastUpdated: z.string()
 })
 
-// 验证导入的数据
-const validatedDrugs = drugsData.drugs.map(drug => {
-  const result = DrugSchema.safeParse(drug)
-  if (!result.success) {
-    console.error('Invalid drug data:', drug, result.error)
-    throw new Error('Invalid drug data')
-  }
-  return result.data
+// 修改验证方式
+// 验证整个数据结构，包括 drugs 数组和 meta 信息
+const DataSchema = z.object({
+  drugs: z.array(DrugSchema),
+  meta: z.object({
+    total: z.number(),
+    lastUpdate: z.string()
+  })
 })
+
+// 验证整个数据文件
+DataSchema.parse(drugsData)
 
 export function searchDrugs(query: string): SearchResultItem[] {
   if (!query.trim()) return []

@@ -8,10 +8,7 @@ import { siteConfig } from '@/lib/config'
 import drugsData from '@/data/drugs.json'
 import type { SearchResultItem, SearchHistory } from '@/lib/types'
 import { SearchResults } from '@/components/search/SearchResults'
-import { ActiveFilters } from '@/components/search/ActiveFilters'
 import { SearchTag } from '@/components/search/SearchTag'
-import { formatRegistrationType } from '@/lib/utils'
-import { useRouter } from 'next/router'
 
 // 添加筛选选项配置
 const FILTER_OPTIONS = {
@@ -22,11 +19,10 @@ const FILTER_OPTIONS = {
 
 interface TagClickParams {
   text: string
-  type?: string  // 添加可选的 type 属性
+  type?: string
 }
 
 const Home: NextPage = () => {
-  const router = useRouter()
   const [results, setResults] = useState<SearchResultItem[]>([])
   const [isSearching, setIsSearching] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
@@ -102,15 +98,19 @@ const Home: NextPage = () => {
 
   const handleTagClick = useCallback(({ text, type }: TagClickParams) => {
     setActiveFilters(prev => {
+      // 使用 type 参数来决定如何处理筛选
       const newFilters = prev.includes(text)
         ? prev.filter(f => f !== text)
         : [...prev, text]
+      
+      // 根据类型进行特殊处理
+      if (type === '注册') {
+        // 注册类型互斥，移除其他注册类型
+        return [...prev.filter(f => !f.includes('生产药品')), text]
+      }
+      
       return newFilters
     })
-  }, [])
-
-  const handleRemoveFilter = useCallback((filter: string) => {
-    setActiveFilters(prev => prev.filter(f => f !== filter))
   }, [])
 
   const handleClearFilters = useCallback(() => {
@@ -155,10 +155,13 @@ const Home: NextPage = () => {
   // 处理撤销操作
   const handleUndo = useCallback(() => {
     if (searchHistory.length > 0) {
-      const [lastState, ...rest] = searchHistory
-      setSearchHistory(rest)
-      setSearchTerm(lastState.searchTerm)
-      setActiveFilters(lastState.filters)
+      // 使用数组解构时进行类型检查
+      const [firstState, ...rest] = searchHistory
+      if (firstState) {  // 添加空值检查
+        setSearchHistory(rest)
+        setSearchTerm(firstState.searchTerm)
+        setActiveFilters(firstState.filters)
+      }
     }
   }, [searchHistory])
 
@@ -234,7 +237,7 @@ const Home: NextPage = () => {
                       key={category}
                       text={category}
                       type="分类"
-                      onClick={() => handleTagClick({ text: category, type: "分类" })}
+                      onClick={() => handleTagClick({ text: category })}
                       active={activeFilters.includes(category)}
                     />
                   ))}
@@ -250,7 +253,7 @@ const Home: NextPage = () => {
                       <SearchTag
                         key={filter}
                         text={filter}
-                        onClick={() => handleTagClick({ text: filter, type: "" })}
+                        onClick={() => handleTagClick({ text: filter })}
                         active
                       />
                     ))}
