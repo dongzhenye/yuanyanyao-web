@@ -1,7 +1,7 @@
 import React from 'react'
 import type { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
-import { useState, useMemo, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { Header } from '@/components/layout/Header'
 import { SearchBox } from '@/components/search/SearchBox'
 import { searchDrugs } from '@/lib/search'
