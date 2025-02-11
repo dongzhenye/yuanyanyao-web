@@ -7,11 +7,10 @@ import { Header } from '@/components/layout/Header'
 import { DrugHeader } from '@/components/drug/DrugHeader'
 import { CompanyInfo } from '@/components/drug/CompanyInfo'
 import { RelatedDrugs } from '@/components/drug/RelatedDrugs'
-import { DrugIdentifier } from '@/components/drug/DrugIdentifier'
+import { BasicInfo } from '@/components/drug/BasicInfo'
 import { DrugNames } from '@/components/drug/DrugNames'
 import { DrugSpecs } from '@/components/drug/DrugSpecs'
 import { OriginalInfo } from '@/components/drug/OriginalInfo'
-import { BasicInfo } from '@/components/drug/BasicInfo'
 
 interface DrugPageProps {
   drug: DrugWithPinyin
