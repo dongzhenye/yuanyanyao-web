@@ -1,45 +1,42 @@
 import React from 'react'
 
-interface SearchTerm {
-  id: number
-  text: string
-  type: "通用名" | "商品名" | "厂商" | "简拼" | "拼音"
-}
-
-const HOT_TERMS: SearchTerm[] = [
-  // 通用名示例
-  { id: 1, text: "布洛芬", type: "通用名" },
-  // 商品名示例（中/英文）
-  { id: 2, text: "达菲", type: "商品名" },
-  { id: 3, text: "Tamiflu", type: "商品名" },
-  // 厂商示例（中/英文）
-  { id: 4, text: "辉瑞", type: "厂商" },
-  { id: 5, text: "Pfizer", type: "厂商" },
-  // 拼音示例
-  { id: 6, text: "buluofen", type: "拼音" }
-]
-
 interface SearchSuggestionsProps {
   onSelect: (term: string) => void
 }
 
+// 热门搜索词列表
+const HOT_SEARCHES = [
+  {
+    type: '常用药品',
+    terms: ['芬必得', '达菲', '美林', '布洛芬']
+  },
+  {
+    type: '慢性病药',
+    terms: ['拜新同', '阿托伐他汀', '氯吡格雷', '厄贝沙坦']
+  },
+  {
+    type: '知名药企',
+    terms: ['辉瑞', '拜耳']
+  }
+]
+
 export const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({ onSelect }) => {
   return (
-    <div className="mt-4">
-      {/* 热门搜索标签 */}
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="inline-flex items-center text-sm text-gray-500 whitespace-nowrap">
-          热门搜索:
-        </span>
-        {HOT_TERMS.map((term) => (
-          <button
-            key={term.id}
-            onClick={() => onSelect(term.text)}
-            className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
-          >
-            {term.text}
-          </button>
-        ))}
+    <div className="mt-3">
+      <div className="text-sm text-gray-500 mb-2">热门搜索：</div>
+      <div className="flex flex-wrap gap-2">
+        {HOT_SEARCHES.flatMap(group => 
+          group.terms.map(term => (
+            <button
+              key={term}
+              onClick={() => onSelect(term)}
+              className="px-2 py-1 text-sm bg-gray-100 text-gray-700 rounded-full
+                hover:bg-gray-200 transition-colors"
+            >
+              {term}
+            </button>
+          ))
+        )}
       </div>
     </div>
   )
