@@ -192,15 +192,18 @@ const HomePage: NextPage = () => {
         description={siteConfig.description}
       />
       
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-white">
+        {/* 添加背景图案 */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.2] pointer-events-none" />
+        
         <Header />
         
-        <main className="container max-w-7xl mx-auto px-4 py-8">
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">
+        <main className="container relative max-w-7xl mx-auto px-4 py-8">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
               {siteConfig.name}
             </h1>
-            <p className="text-gray-500">
+            <p className="text-lg text-gray-600">
               {subtitle}
               <a 
                 href={siteConfig.databaseUrl}
@@ -213,12 +216,15 @@ const HomePage: NextPage = () => {
             </p>
           </div>
 
-          <SearchBox 
-            value={searchTerm}
-            onChange={setSearchTerm}
-            onSearch={handleSearch}
-            shouldFocus={shouldFocusInput}
-          />
+          {/* 搜索框添加卡片效果 */}
+          <div className="bg-white/80 backdrop-blur-sm rounded-xl shadow-lg p-6 mb-8">
+            <SearchBox 
+              value={searchTerm}
+              onChange={setSearchTerm}
+              onSearch={handleSearch}
+              shouldFocus={shouldFocusInput}
+            />
+          </div>
 
           {/* 只在有搜索词时显示筛选组件 */}
           {searchTerm && (
