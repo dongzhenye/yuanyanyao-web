@@ -129,8 +129,8 @@ const HomePage: NextPage = () => {
   // 处理关联搜索
   const handleRelatedSearch = useCallback((type: 'generic' | 'brand' | 'manufacturer', value: string) => {
     // 保存历史
-    const currentState = {
-      searchTerm,
+    const currentState: SearchHistory = {
+      searchTerm: searchTerm,
       filters: activeFilters,
       timestamp: Date.now()
     }
@@ -154,18 +154,18 @@ const HomePage: NextPage = () => {
     }
   }, [searchTerm, activeFilters])
   
-  // 处理撤销操作
+  // 实现撤销功能
   const handleUndo = useCallback(() => {
     if (searchHistory.length > 0) {
-      // 使用数组解构时进行类型检查
-      const [firstState, ...rest] = searchHistory
-      if (firstState) {  // 添加空值检查
-        setSearchHistory(rest)
-        setSearchTerm(firstState.searchTerm)
-        setActiveFilters(firstState.filters)
-      }
+      const prevSearch = searchHistory[searchHistory.length - 1]
+      if (!prevSearch) return // 类型保护
+      
+      setSearchTerm(prevSearch.searchTerm)
+      setActiveFilters(prevSearch.filters)
+      setSearchHistory(prev => prev.slice(0, -1))
+      handleSearch(prevSearch.searchTerm)
     }
-  }, [searchHistory])
+  }, [searchHistory, handleSearch])
 
   return (
     <>
@@ -195,134 +195,40 @@ const HomePage: NextPage = () => {
             </p>
           </div>
 
-          <SearchBox
+          <SearchBox 
             value={searchTerm}
             onChange={setSearchTerm}
             onSearch={handleSearch}
-            autoFocus={shouldFocusInput}
+            isSearching={isSearching}
+            shouldFocus={shouldFocusInput}
           />
 
-          <SearchFilters 
-            activeFilters={activeFilters}
-            onTagClick={handleTagClick}
-            onClearFilters={handleClearFilters}
-          />
-
-          {/* 添加筛选标签区域 */}
+          {/* 只在有搜索词时显示筛选组件 */}
           {searchTerm && (
-            <div className="mt-4 mb-6">
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                <span>筛选：</span>
-                <div className="flex flex-wrap gap-2">
-                  {/* 注册类型标签 */}
-                  {FILTER_OPTIONS.注册.map(reg => {
-                    const backendValue = reg === "进口药" ? "境外生产药品" : "境内生产药品"
-                    return (
-                      <SearchTag 
-                        key={reg}
-                        text={reg}
-                        type="注册"
-                        onClick={() => handleTagClick({ text: backendValue, type: "注册" })}
-                        active={activeFilters.includes(backendValue)}
-                      />
-                    )
-                  })}
-                  
-                  {/* 剂型标签 */}
-                  {FILTER_OPTIONS.剂型.map(form => (
-                    <SearchTag 
-                      key={form}
-                      text={form}
-                      type="剂型"
-                      onClick={() => handleTagClick({ text: form, type: "剂型" })}
-                      active={activeFilters.includes(form)}
-                    />
-                  ))}
-
-                  {/* 分类标签 */}
-                  {FILTER_OPTIONS.分类.map(category => (
-                    <SearchTag 
-                      key={category}
-                      text={category}
-                      type="分类"
-                      onClick={() => handleTagClick({ text: category })}
-                      active={activeFilters.includes(category)}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {/* 显示已选筛选条件 */}
-              {activeFilters.length > 0 && (
-                <div className="mt-3 flex items-center gap-2">
-                  <span className="text-sm text-gray-500">已选条件：</span>
-                  <div className="flex flex-wrap gap-2">
-                    {activeFilters.map(filter => (
-                      <SearchTag
-                        key={filter}
-                        text={filter}
-                        onClick={() => handleTagClick({ text: filter })}
-                        active
-                      />
-                    ))}
-                    <button
-                      onClick={handleClearFilters}
-                      className="text-sm text-gray-400 hover:text-gray-600"
-                    >
-                      清除全部
-                    </button>
-                  </div>
-                </div>
-              )}
-
-              {/* 在筛选区域和搜索结果之间添加统一的状态栏 */}
-              <div className="flex items-center justify-between py-3 border-b border-gray-200">
-                {/* 左侧：结果统计 */}
-                <div className="flex items-center gap-2 text-sm text-gray-500">
-                  <span className="font-medium">
-                    找到 {results.length} 个结果
-                  </span>
-                  {activeFilters.length > 0 && (
-                    <span className="text-gray-400">
-                      (已筛选)
-                    </span>
-                  )}
-                </div>
-
-                {/* 右侧：搜索历史 */}
-                {searchHistory.length > 0 && (
-                  <div className="flex items-center gap-3 text-sm">
-                    <button
-                      onClick={handleUndo}
-                      className="flex items-center gap-1.5 text-primary hover:text-primary-dark transition-colors"
-                    >
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                      </svg>
-                      <span>返回上次搜索</span>
-                    </button>
-                    <span className="text-gray-400 text-xs">
-                      |
-                    </span>
-                    <span className="text-gray-400">
-                      共 {searchHistory.length} 条历史
-                    </span>
-                  </div>
-                )}
-              </div>
-            </div>
+            <SearchFilters
+              activeFilters={activeFilters}
+              onTagClick={handleTagClick}
+              onClearFilters={handleClearFilters}
+            />
           )}
 
-          <div className="mt-8">
-            <SearchResults 
-              results={results}
-              isLoading={isSearching}
-              searchTerm={searchTerm}
-              onRelatedSearch={handleRelatedSearch}
-              onTagClick={handleTagClick}
-              activeFilters={activeFilters}
-            />
-          </div>
+          <SearchResults 
+            results={results}
+            isLoading={isSearching}
+            searchTerm={searchTerm}
+            onRelatedSearch={handleRelatedSearch}
+            onTagClick={handleTagClick}
+            activeFilters={activeFilters}
+          />
+
+          {searchHistory.length > 0 && (
+            <button
+              onClick={handleUndo}
+              className="text-sm text-primary hover:text-primary-dark"
+            >
+              撤销上次搜索
+            </button>
+          )}
         </main>
       </div>
     </>

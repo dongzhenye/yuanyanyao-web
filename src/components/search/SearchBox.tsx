@@ -6,7 +6,8 @@ interface SearchBoxProps {
   onChange: (value: string) => void
   onSearch: (query: string) => void
   placeholder?: string
-  autoFocus?: boolean
+  shouldFocus?: boolean
+  isSearching?: boolean
 }
 
 export const SearchBox = ({ 
@@ -14,15 +15,16 @@ export const SearchBox = ({
   onChange, 
   onSearch, 
   placeholder,
-  autoFocus 
+  shouldFocus,
+  isSearching 
 }: SearchBoxProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if (autoFocus) {
+    if (shouldFocus) {
       inputRef.current?.focus()
     }
-  }, [value, autoFocus])
+  }, [shouldFocus])
 
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value
@@ -44,13 +46,17 @@ export const SearchBox = ({
           value={value}
           onChange={handleChange}
           placeholder={placeholder || "输入药品名称、拼音或简拼搜索"}
-          className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg 
+          className={`w-full px-4 py-3 text-lg border border-gray-300 rounded-lg 
             focus:ring-2 focus:ring-primary/20 focus:border-primary
             placeholder:text-gray-400
-            transition-all duration-200 ease-in-out"
+            transition-all duration-200 ease-in-out
+            ${isSearching ? 'bg-gray-50' : 'bg-white'}`}
+          disabled={isSearching}
         />
         <div className="absolute right-3 top-1/2 -translate-y-1/2">
-          {value && (
+          {isSearching ? (
+            <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          ) : value && (
             <button
               onClick={() => {
                 onChange('')

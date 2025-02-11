@@ -87,8 +87,8 @@ export const SearchResults = ({
                   className="group relative hover:underline hover:text-primary-dark"
                 >
                   <HighlightText 
-                    text={drug.genericName}
-                    matches={getMatches(drug.matches, 'genericName')}
+                    text={drug.productName}
+                    matches={getMatches(drug.matches, 'productName')}
                   />
                   <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 
                     text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100
@@ -100,8 +100,6 @@ export const SearchResults = ({
                     }
                   </span>
                 </button>
-                <span className="mx-1">-</span>
-                <span>{drug.formulation}</span>
               </h3>
               <div className="mt-1 text-gray-600">
                 <button
