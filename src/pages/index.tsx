@@ -6,11 +6,12 @@ import { SearchBox } from '@/components/search/SearchBox'
 import { searchDrugs } from '@/lib/search'
 import { siteConfig } from '@/lib/config'
 import drugsData from '@/data/drugs.json'
-import type { SearchResultItem } from '@/lib/types'
+import type { SearchResultItem, SearchHistory } from '@/lib/types'
 import { SearchResults } from '@/components/search/SearchResults'
 import { ActiveFilters } from '@/components/search/ActiveFilters'
 import { SearchTag } from '@/components/search/SearchTag'
 import { formatRegistrationType } from '@/lib/utils'
+import { useRouter } from 'next/router'
 
 // 添加筛选选项配置
 const FILTER_OPTIONS = {
@@ -25,10 +26,13 @@ interface TagClickParams {
 }
 
 const Home: NextPage = () => {
+  const router = useRouter()
   const [results, setResults] = useState<SearchResultItem[]>([])
   const [isSearching, setIsSearching] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [activeFilters, setActiveFilters] = useState<string[]>([])
+  const [searchHistory, setSearchHistory] = useState<SearchHistory[]>([])
+  const [shouldFocusInput, setShouldFocusInput] = useState(false)
 
   // 计算副标题
   const subtitle = useMemo(() => {
@@ -120,6 +124,44 @@ const Home: NextPage = () => {
     }
   }, [activeFilters, handleSearch, searchTerm])
 
+  // 处理关联搜索
+  const handleRelatedSearch = useCallback((type: 'generic' | 'brand' | 'manufacturer', value: string) => {
+    // 保存历史
+    const currentState = {
+      searchTerm,
+      filters: activeFilters,
+      timestamp: Date.now()
+    }
+    setSearchHistory(prev => [currentState, ...prev].slice(0, 10))
+    
+    // 更新搜索词和筛选条件
+    setSearchTerm(value)
+    setShouldFocusInput(true) // 触发输入框聚焦
+    
+    // 根据类型设置筛选条件
+    switch(type) {
+      case 'generic':
+        setActiveFilters(prev => 
+          prev.filter(f => ['registrationType', 'formulation'].includes(f))
+        )
+        break
+      case 'brand':
+      case 'manufacturer':
+        setActiveFilters([])
+        break
+    }
+  }, [searchTerm, activeFilters])
+  
+  // 处理撤销操作
+  const handleUndo = useCallback(() => {
+    if (searchHistory.length > 0) {
+      const [lastState, ...rest] = searchHistory
+      setSearchHistory(rest)
+      setSearchTerm(lastState.searchTerm)
+      setActiveFilters(lastState.filters)
+    }
+  }, [searchHistory])
+
   return (
     <>
       <NextSeo 
@@ -148,7 +190,12 @@ const Home: NextPage = () => {
             </p>
           </div>
 
-          <SearchBox onSearch={handleSearch} />
+          <SearchBox
+            value={searchTerm}
+            onChange={setSearchTerm}
+            onSearch={handleSearch}
+            autoFocus={shouldFocusInput}
+          />
 
           {/* 添加筛选标签区域 */}
           {searchTerm && (
@@ -217,10 +264,40 @@ const Home: NextPage = () => {
                 </div>
               )}
 
-              {/* 显示结果统计 */}
-              <div className="mt-3 text-sm text-gray-500">
-                找到 {results.length} 个结果
-                {activeFilters.length > 0 && " (已筛选)"}
+              {/* 在筛选区域和搜索结果之间添加统一的状态栏 */}
+              <div className="flex items-center justify-between py-3 border-b border-gray-200">
+                {/* 左侧：结果统计 */}
+                <div className="flex items-center gap-2 text-sm text-gray-500">
+                  <span className="font-medium">
+                    找到 {results.length} 个结果
+                  </span>
+                  {activeFilters.length > 0 && (
+                    <span className="text-gray-400">
+                      (已筛选)
+                    </span>
+                  )}
+                </div>
+
+                {/* 右侧：搜索历史 */}
+                {searchHistory.length > 0 && (
+                  <div className="flex items-center gap-3 text-sm">
+                    <button
+                      onClick={handleUndo}
+                      className="flex items-center gap-1.5 text-primary hover:text-primary-dark transition-colors"
+                    >
+                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                      </svg>
+                      <span>返回上次搜索</span>
+                    </button>
+                    <span className="text-gray-400 text-xs">
+                      |
+                    </span>
+                    <span className="text-gray-400">
+                      共 {searchHistory.length} 条历史
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -230,6 +307,7 @@ const Home: NextPage = () => {
               results={results}
               isLoading={isSearching}
               searchTerm={searchTerm}
+              onRelatedSearch={handleRelatedSearch}
               onTagClick={handleTagClick}
               activeFilters={activeFilters}
             />

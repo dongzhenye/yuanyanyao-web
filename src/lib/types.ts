@@ -1,4 +1,4 @@
-import type { FuseResultMatch } from 'fuse.js'
+// 如果需要这个类型，保留导入；如果不需要，删除导入
 
 // 定义拼音搜索字段类型
 interface PinyinSearch {
@@ -55,7 +55,14 @@ export interface DrugWithPinyin extends Drug {
   searchPinyin: PinyinSearch
 }
 
-// 搜索结果项
+// 添加搜索历史类型
+export interface SearchHistory {
+  searchTerm: string
+  filters: string[]
+  timestamp: number
+}
+
+// 扩展搜索结果项类型
 export interface SearchResultItem extends DrugWithPinyin {
   score: number
   sortScore: number
@@ -63,4 +70,9 @@ export interface SearchResultItem extends DrugWithPinyin {
     key: string
     indices: Array<[number, number]>
   }> | undefined
+  relatedCounts?: {
+    sameGeneric: number
+    sameBrand: number
+    sameManufacturer: number
+  }
 } 

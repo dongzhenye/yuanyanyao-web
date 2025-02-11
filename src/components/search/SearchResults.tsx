@@ -10,6 +10,7 @@ interface SearchResultsProps {
   results: SearchResultItem[]
   isLoading?: boolean
   searchTerm?: string
+  onRelatedSearch: (type: 'generic' | 'brand' | 'manufacturer', value: string) => void
   onTagClick?: (tag: { text: string; type: string }) => void
   activeFilters?: string[]
 }
@@ -23,6 +24,7 @@ export const SearchResults = ({
   results, 
   isLoading, 
   searchTerm,
+  onRelatedSearch,
   onTagClick,
   activeFilters = []
 }: SearchResultsProps) => {
@@ -77,16 +79,43 @@ export const SearchResults = ({
           <div className="flex justify-between items-start gap-4">
             <div className="flex-1 min-w-0">
               <h3 className="font-medium text-lg text-primary truncate">
-                <HighlightText 
-                  text={drug.productName}
-                  matches={getMatches(drug.matches, 'productName')}
-                />
+                <button
+                  onClick={(e) => {
+                    e.preventDefault()
+                    onRelatedSearch('generic', drug.genericName)
+                  }}
+                  className="group relative hover:underline hover:text-primary-dark"
+                >
+                  <HighlightText 
+                    text={drug.genericName}
+                    matches={getMatches(drug.matches, 'genericName')}
+                  />
+                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 
+                    text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100
+                    transition-opacity whitespace-nowrap"
+                  >
+                    查看同类药品
+                    {drug.relatedCounts?.sameGeneric && 
+                      ` (${drug.relatedCounts.sameGeneric})`
+                    }
+                  </span>
+                </button>
+                <span className="mx-1">-</span>
+                <span>{drug.formulation}</span>
               </h3>
               <div className="mt-1 text-gray-600">
-                <HighlightText 
-                  text={formatBrandName(drug.brandName.cn)}
-                  matches={getMatches(drug.matches, 'brandName.cn')}
-                />
+                <button
+                  onClick={(e) => {
+                    e.preventDefault()
+                    onRelatedSearch('brand', drug.brandName.cn)
+                  }}
+                  className="hover:underline"
+                >
+                  <HighlightText 
+                    text={formatBrandName(drug.brandName.cn)}
+                    matches={getMatches(drug.matches, 'brandName.cn')}
+                  />
+                </button>
                 {drug.brandName.en && (
                   <span className="text-gray-400 text-sm ml-2">
                     (<HighlightText 
@@ -97,10 +126,18 @@ export const SearchResults = ({
                 )}
               </div>
               <div className="mt-1 text-sm text-gray-500 truncate">
-                <HighlightText 
-                  text={drug.manufacturerName}
-                  matches={getMatches(drug.matches, 'manufacturerName')}
-                />
+                <button
+                  onClick={(e) => {
+                    e.preventDefault()
+                    onRelatedSearch('manufacturer', drug.manufacturerName)
+                  }}
+                  className="hover:underline"
+                >
+                  <HighlightText 
+                    text={drug.manufacturerName}
+                    matches={getMatches(drug.matches, 'manufacturerName')}
+                  />
+                </button>
               </div>
             </div>
             <div className="flex flex-col items-end gap-1.5">

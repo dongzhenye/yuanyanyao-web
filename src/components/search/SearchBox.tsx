@@ -1,42 +1,59 @@
-import React, { useState, useCallback } from 'react'
+import React, { useCallback, useRef, useEffect } from 'react'
 import { SearchSuggestions } from './SearchSuggestions'
 
 interface SearchBoxProps {
+  value: string
+  onChange: (value: string) => void
   onSearch: (query: string) => void
   placeholder?: string
+  autoFocus?: boolean
 }
 
-export const SearchBox = ({ onSearch, placeholder }: SearchBoxProps) => {
-  const [value, setValue] = useState('')
-  
+export const SearchBox = ({ 
+  value, 
+  onChange, 
+  onSearch, 
+  placeholder,
+  autoFocus 
+}: SearchBoxProps) => {
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (autoFocus) {
+      inputRef.current?.focus()
+    }
+  }, [value, autoFocus])
+
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value
-    setValue(newValue)
+    onChange(newValue)
     onSearch(newValue)
-  }, [onSearch])
+  }, [onChange, onSearch])
 
   const handleSuggestionSelect = useCallback((term: string) => {
-    setValue(term)
+    onChange(term)
     onSearch(term)
-  }, [onSearch])
+  }, [onChange, onSearch])
 
   return (
     <div className="max-w-2xl mx-auto">
       <div className="relative">
         <input
+          ref={inputRef}
           type="text"
           value={value}
           onChange={handleChange}
           placeholder={placeholder || "输入药品名称、拼音或简拼搜索"}
           className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg 
             focus:ring-2 focus:ring-primary/20 focus:border-primary
-            placeholder:text-gray-400"
+            placeholder:text-gray-400
+            transition-all duration-200 ease-in-out"
         />
         <div className="absolute right-3 top-1/2 -translate-y-1/2">
           {value && (
             <button
               onClick={() => {
-                setValue('')
+                onChange('')
                 onSearch('')
               }}
               className="text-gray-400 hover:text-gray-600"
