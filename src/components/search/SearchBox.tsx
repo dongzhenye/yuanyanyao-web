@@ -63,14 +63,14 @@ export const SearchBox = ({
             placeholder:text-gray-400
             transition-all duration-200 ease-in-out"
         />
-        <div className="absolute right-3 top-1/2 -translate-y-1/2">
+        <div className="absolute right-3 top-0 h-full flex items-center">
           {value && (
             <button
               onClick={() => {
                 onChange('')
                 onSearch('')
               }}
-              className="text-gray-400 hover:text-gray-600"
+              className="text-gray-400 hover:text-gray-600 p-1"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
