@@ -81,7 +81,7 @@ const AboutPage: NextPage = () => {
                 <div>
                   <h3 className="font-medium text-gray-900">如何判断一个药品是否为原研药？</h3>
                   <p className="text-gray-600">
-                    可以通过本网站搜索药品名称，查看药品详情中的"原研信息"部分。
+                    可以通过本网站搜索药品名称，查看药品详情中的&quot;原研信息&quot;部分。
                     我们会标注药品的原研状态、认定依据等信息。
                   </p>
                 </div>
@@ -95,7 +95,7 @@ const AboutPage: NextPage = () => {
                 <div>
                   <h3 className="font-medium text-gray-900">发现数据有误怎么办？</h3>
                   <p className="text-gray-600">
-                    您可以点击页面底部的"我要纠错"链接，通过 GitHub Issues 向我们反馈。
+                    您可以点击页面底部的&quot;我要纠错&quot;链接，通过 GitHub Issues 向我们反馈。
                     我们会及时核实并更正。
                   </p>
                 </div>
