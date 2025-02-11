@@ -138,12 +138,24 @@ const HomePage: NextPage = () => {
     localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
   }, [searchHistory])
 
+  // 处理历史记录点击
+  const handleHistoryClick = useCallback(() => {
+    if (searchHistory.length > 0) {
+      const lastSearch = searchHistory[0]
+      if (!lastSearch) return
+
+      setSearchTerm(lastSearch.searchTerm)
+      setActiveFilters([...lastSearch.filters])  // 创建新数组以确保类型安全
+      handleSearch(lastSearch.searchTerm)
+    }
+  }, [searchHistory, handleSearch])
+
   // 处理关联搜索
   const handleRelatedSearch = useCallback((type: 'generic' | 'brand' | 'manufacturer', value: string) => {
     // 保存历史记录前先检查是否重复
     const currentState = {
       searchTerm,
-      filters: activeFilters,
+      filters: [...activeFilters],  // 创建新数组以确保类型安全
       timestamp: Date.now()
     }
     setSearchHistory(prev => {
@@ -173,18 +185,6 @@ const HomePage: NextPage = () => {
     }
   }, [searchTerm, activeFilters])
   
-  // 处理历史记录点击
-  const handleHistoryClick = useCallback(() => {
-    if (searchHistory.length > 0) {
-      const lastSearch = searchHistory[0] // 使用第一个元素，因为新的历史记录是添加到数组开头的
-      if (!lastSearch) return // 添加安全检查
-
-      setSearchTerm(lastSearch.searchTerm)
-      setActiveFilters(lastSearch.filters)
-      handleSearch(lastSearch.searchTerm)
-    }
-  }, [searchHistory, handleSearch])
-
   return (
     <>
       <NextSeo 
@@ -244,23 +244,14 @@ const HomePage: NextPage = () => {
                 )}
               </div>
 
-              {/* 右侧：搜索历史 */}
+              {/* 右侧：搜索历史 - 简化版本 */}
               {searchHistory.length > 0 && (
-                <div className="flex items-center gap-3 text-sm">
-                  <button
-                    onClick={handleHistoryClick}
-                    className="flex items-center gap-1.5 text-primary hover:text-primary-dark transition-colors"
-                  >
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                    </svg>
-                    <span>返回上次搜索</span>
-                  </button>
-                  <span className="text-gray-400 text-xs">|</span>
-                  <span className="text-gray-400">
-                    共 {searchHistory.length} 条历史
-                  </span>
-                </div>
+                <button
+                  onClick={handleHistoryClick}
+                  className="text-sm text-primary hover:text-primary-dark hover:underline"
+                >
+                  返回上次搜索
+                </button>
               )}
             </div>
           )}
