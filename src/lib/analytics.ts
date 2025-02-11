@@ -5,19 +5,19 @@ type EventNames =
   | 'view_drug'
 
 interface EventParams {
-  search?: {
+  search: {
     term: string
     results_count: number
   }
-  filter_change?: {
+  filter_change: {
     filters: string[]
   }
-  related_search?: {
+  related_search: {
     from: string
     to: string
     type: 'generic' | 'brand' | 'manufacturer'
   }
-  view_drug?: {
+  view_drug: {
     drug_id: string
     drug_name: string
   }
