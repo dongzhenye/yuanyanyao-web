@@ -11,6 +11,7 @@ import { DrugIdentifier } from '@/components/drug/DrugIdentifier'
 import { DrugNames } from '@/components/drug/DrugNames'
 import { DrugSpecs } from '@/components/drug/DrugSpecs'
 import { OriginalInfo } from '@/components/drug/OriginalInfo'
+import { BasicInfo } from '@/components/drug/BasicInfo'
 
 interface DrugPageProps {
   drug: DrugWithPinyin
@@ -37,7 +38,7 @@ const DrugPage: NextPage<DrugPageProps> = ({ drug, relatedDrugs }) => {
           <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* 主要内容区域 */}
             <div className="lg:col-span-8 space-y-6">
-              <DrugIdentifier drug={drug} />
+              <BasicInfo drug={drug} />
               <DrugNames drug={drug} />
               <DrugSpecs drug={drug} />
               <CompanyInfo drug={drug} />
