@@ -40,14 +40,6 @@ const HomePage: NextPage = () => {
   })
   const [shouldFocusInput, setShouldFocusInput] = useState(false)
 
-  // 计算副标题
-  const subtitle = useMemo(() => {
-    return siteConfig.getSubtitle({
-      total: drugsData.meta.total,
-      lastUpdate: new Date(drugsData.meta.lastUpdate)
-    })
-  }, [])
-
   const handleSearch = useCallback((query: string) => {
     setIsSearching(true)
     setSearchTerm(query)
