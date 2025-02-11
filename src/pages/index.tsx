@@ -1,4 +1,5 @@
-import { NextPage } from 'next'
+import React from 'react'
+import type { NextPage } from 'next'
 import { NextSeo } from 'next-seo'
 import { useState, useMemo, useCallback, useEffect } from 'react'
 import { Header } from '@/components/layout/Header'
@@ -9,6 +10,7 @@ import drugsData from '@/data/drugs.json'
 import type { SearchResultItem, SearchHistory } from '@/lib/types'
 import { SearchResults } from '@/components/search/SearchResults'
 import { SearchTag } from '@/components/search/SearchTag'
+import { SearchFilters } from '@/components/search/SearchFilters'
 
 // 添加筛选选项配置
 const FILTER_OPTIONS = {
@@ -22,7 +24,7 @@ interface TagClickParams {
   type?: string
 }
 
-const Home: NextPage = () => {
+const HomePage: NextPage = () => {
   const [results, setResults] = useState<SearchResultItem[]>([])
   const [isSearching, setIsSearching] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
@@ -175,7 +177,7 @@ const Home: NextPage = () => {
       <div className="min-h-screen bg-gray-50">
         <Header />
         
-        <main className="max-w-7xl mx-auto px-4 py-8">
+        <main className="container max-w-7xl mx-auto px-4 py-8">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-4">
               {siteConfig.name}
@@ -198,6 +200,12 @@ const Home: NextPage = () => {
             onChange={setSearchTerm}
             onSearch={handleSearch}
             autoFocus={shouldFocusInput}
+          />
+
+          <SearchFilters 
+            activeFilters={activeFilters}
+            onTagClick={handleTagClick}
+            onClearFilters={handleClearFilters}
           />
 
           {/* 添加筛选标签区域 */}
@@ -321,4 +329,4 @@ const Home: NextPage = () => {
   )
 }
 
-export default Home
+export default HomePage

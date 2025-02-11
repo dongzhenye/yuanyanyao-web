@@ -119,7 +119,7 @@ export const SearchResults = ({
                 {drug.brandName.en && (
                   <span className="text-gray-400 text-sm ml-2">
                     (<HighlightText 
-                      text={formatBrandName(drug.brandName.en, 'en')}
+                      text={formatBrandName(drug.brandName.en)}
                       matches={getMatches(drug.matches, 'brandName.en')}
                     />)
                   </span>

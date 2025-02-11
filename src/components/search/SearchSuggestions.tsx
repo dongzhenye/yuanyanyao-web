@@ -23,34 +23,23 @@ interface SearchSuggestionsProps {
   onSelect: (term: string) => void
 }
 
-export const SearchSuggestions = ({ onSelect }: SearchSuggestionsProps) => {
+export const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({ onSelect }) => {
   return (
     <div className="mt-4">
-      <div className="flex items-center gap-2 text-sm text-gray-500">
-        <span>热门搜索：</span>
-        <div className="flex flex-wrap gap-2">
-          {HOT_TERMS.map(term => (
-            <button
-              key={term.id}
-              onClick={() => onSelect(term.text)}
-              className="group relative px-3 py-1.5 text-sm bg-white text-gray-600 rounded-full 
-                border border-gray-200 hover:bg-primary hover:text-white 
-                hover:border-primary transition-all duration-200"
-            >
-              {term.text}
-              <span 
-                className="pointer-events-none absolute -top-9 left-1/2 -translate-x-1/2 
-                  whitespace-nowrap bg-gray-800 text-white text-xs px-2 py-1 rounded
-                  opacity-0 group-hover:opacity-100 transition-opacity duration-200
-                  before:content-[''] before:absolute before:top-full before:left-1/2 
-                  before:-translate-x-1/2 before:border-4 before:border-transparent
-                  before:border-t-gray-800"
-              >
-                {term.type}
-              </span>
-            </button>
-          ))}
-        </div>
+      {/* 热门搜索标签 */}
+      <div className="flex flex-wrap items-center gap-2">
+        <span className="inline-flex items-center text-sm text-gray-500 whitespace-nowrap">
+          热门搜索:
+        </span>
+        {HOT_TERMS.map((term) => (
+          <button
+            key={term.id}
+            onClick={() => onSelect(term.text)}
+            className="px-3 py-1 text-sm bg-gray-100 hover:bg-gray-200 rounded-full transition-colors"
+          >
+            {term.text}
+          </button>
+        ))}
       </div>
     </div>
   )

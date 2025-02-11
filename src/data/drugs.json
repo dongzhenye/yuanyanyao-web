@@ -3,28 +3,12 @@
     {
       "id": "1",
       "registrationType": "境外生产药品",
-      "identifier": "H20130142",
-      "genericName": "布洛芬",
-      "productName": "布洛芬片",
-      "brandName": {
-        "cn": "芬必得",
-        "en": "Brufen"
-      },
-      "category": "化学药品",
-      "formulation": "片剂",
-      "specification": "0.2g",
-      "mahName": "利君制药",
-      "manufacturerName": "利君制药股份有限公司",
-      "isOriginal": true,
-      "originator": "Mylan",
-      "lastUpdated": "2024-03-20"
-    },
-    {
-      "id": "2",
-      "registrationType": "境外生产药品",
-      "identifier": "H20056252",
-      "genericName": "奥司他韦",
-      "productName": "奥司他韦胶囊",
+      "identifier": "国药准字HJ20140344",
+      "registrationNumber": "国药准字HJ20140344",
+      "inn": "Oseltamivir",
+      "genericName": "磷酸奥司他韦",
+      "productName": "磷酸奥司他韦胶囊",
+      "productNameEn": "Oseltamivir Phosphate Capsules",
       "brandName": {
         "cn": "达菲",
         "en": "Tamiflu"
@@ -32,18 +16,88 @@
       "category": "化学药品",
       "formulation": "胶囊",
       "specification": "75mg",
-      "mahName": "罗氏制药",
-      "manufacturerName": "F. Hoffmann-La Roche Ltd",
+      "packageSpec": "10粒/盒",
+      "mahName": "Roche Pharma (Schweiz) AG",
+      "manufacturerName": "Delpharm Milano S.r.l.",
+      "packagingName": "上海罗氏制药有限公司",
       "isOriginal": true,
-      "originator": "Roche",
-      "lastUpdated": "2024-03-20"
+      "originator": "Roche Pharma International AG",
+      "originatorSource": [
+        {
+          "type": "FDA橙皮书",
+          "url": "https://www.accessdata.fda.gov/scripts/cder/ob/results_product.cfm?Appl_Type=N&Appl_No=021087"
+        },
+        {
+          "type": "药监局公告",
+          "url": "https://www.nmpa.gov.cn/xxgk/ggtg/qtggtg/20140520120001127.html"
+        }
+      ],
+      "approvalDate": "2014-05-20",
+      "lastUpdated": "2024-03-15"
+    },
+    {
+      "id": "2",
+      "registrationType": "境内生产药品",
+      "identifier": "国药准字H20203652",
+      "approvalNumber": "国药准字H20203652",
+      "inn": "Atorvastatin",
+      "genericName": "阿托伐他汀钙",
+      "productName": "阿托伐他汀钙片",
+      "productNameEn": "Atorvastatin Calcium Tablets",
+      "brandName": {
+        "cn": "立普妥",
+        "en": "Lipitor"
+      },
+      "category": "化学药品",
+      "formulation": "片剂",
+      "specification": "20mg",
+      "packageSpec": "7片/盒",
+      "mahName": "辉瑞制药有限公司",
+      "manufacturerName": "辉瑞制药有限公司",
+      "isOriginal": true,
+      "originator": "Pfizer Inc.",
+      "originatorSource": [
+        {
+          "type": "FDA橙皮书",
+          "url": "https://www.accessdata.fda.gov/scripts/cder/ob/results_product.cfm?Appl_Type=N&Appl_No=020702"
+        }
+      ],
+      "approvalDate": "2020-12-15",
+      "lastUpdated": "2024-03-15"
     },
     {
       "id": "3",
+      "registrationType": "境内生产药品",
+      "identifier": "国药准字H20223566",
+      "approvalNumber": "国药准字H20223566",
+      "inn": "Atorvastatin",
+      "genericName": "阿托伐他汀钙",
+      "productName": "阿托伐他汀钙片",
+      "brandName": {
+        "cn": "阿乐"
+      },
+      "category": "化学药品",
+      "formulation": "片剂",
+      "specification": "20mg",
+      "packageSpec": "7片/盒",
+      "mahName": "北京嘉林药业股份有限公司",
+      "manufacturerName": "北京嘉林药业股份有限公司",
+      "isOriginal": false,
+      "originator": "Pfizer Inc.",
+      "originalException": "原研专利到期仿制",
+      "approvalDate": "2022-08-30",
+      "lastUpdated": "2024-03-15"
+    },
+    {
+      "id": "4",
       "registrationType": "境外生产药品",
-      "identifier": "H20160001",
-      "genericName": "辉瑞新冠口服药",
+      "identifier": "国药准字HJ20160001",
+      "approvalNumber": "国药准字HJ20160001",
+      "registrationNumber": "国药准字HJ20160001",
+      "inn": "Paxlovid",
+      "genericName": "奈玛特韦/利托那韦",
       "productName": "奈玛特韦片/利托那韦片组合包装",
+      "productNameEn": "PAXLOVID (nirmatrelvir tablets; ritonavir tablets), co-packaged for oral use",
       "brandName": {
         "cn": "帕克斯洛维德",
         "en": "PAXLOVID"
@@ -51,18 +105,30 @@
       "category": "化学药品",
       "formulation": "片剂",
       "specification": "奈玛特韦150mg×2片/利托那韦100mg×1片",
-      "mahName": "辉瑞制药",
-      "manufacturerName": "Pfizer Ireland Pharmaceuticals",
+      "packageSpec": "30片/盒(5天治疗量)",
+      "mahName": "Pfizer Ireland Pharmaceuticals",
+      "manufacturerName": "Pfizer Manufacturing Deutschland GmbH",
       "isOriginal": true,
-      "originator": "Pfizer",
-      "lastUpdated": "2024-03-20"
+      "originator": "Pfizer Inc.",
+      "originatorSource": [
+        {
+          "type": "FDA橙皮书",
+          "url": "https://www.accessdata.fda.gov/scripts/cder/ob/results_product.cfm?Appl_Type=N&Appl_No=217950"
+        }
+      ],
+      "approvalDate": "2022-02-11",
+      "lastUpdated": "2024-03-15"
     },
     {
-      "id": "4",
+      "id": "5",
       "registrationType": "境外生产药品",
-      "identifier": "H20130138",
+      "identifier": "国药准字HJ20130138",
+      "approvalNumber": "国药准字HJ20130138",
+      "registrationNumber": "国药准字HJ20130138",
+      "inn": "Acetylsalicylic acid",
       "genericName": "阿司匹林",
       "productName": "阿司匹林肠溶片",
+      "productNameEn": "Aspirin Enteric-coated Tablets",
       "brandName": {
         "cn": "拜阿司匹灵",
         "en": "Aspirin"
@@ -70,53 +136,164 @@
       "category": "化学药品",
       "formulation": "肠溶片",
       "specification": "100mg",
-      "mahName": "拜耳医药",
-      "manufacturerName": "Bayer AG",
+      "packageSpec": "30片/盒",
+      "mahName": "Bayer AG",
+      "manufacturerName": "Bayer Bitterfeld GmbH",
       "isOriginal": true,
-      "originator": "Bayer",
-      "lastUpdated": "2024-03-20"
-    },
-    {
-      "id": "5",
-      "registrationType": "境外生产药品",
-      "identifier": "H20140101",
-      "genericName": "瑞舒伐他汀钙",
-      "productName": "瑞舒伐他汀钙片",
-      "brandName": {
-        "cn": "可定",
-        "en": "Crestor"
-      },
-      "category": "化学药品",
-      "formulation": "片剂",
-      "specification": "10mg",
-      "mahName": "阿斯利康制药",
-      "manufacturerName": "AstraZeneca AB",
-      "isOriginal": true,
-      "originator": "AstraZeneca",
-      "lastUpdated": "2024-03-20"
+      "originator": "Bayer AG",
+      "originatorSource": [
+        {
+          "type": "企业声明",
+          "url": "https://www.bayer.com/en/pharma/aspirin"
+        }
+      ],
+      "approvalDate": "2013-05-20",
+      "lastUpdated": "2024-03-15"
     },
     {
       "id": "6",
       "registrationType": "境内生产药品",
-      "identifier": "H20160002",
+      "identifier": "国药准字H20203321",
+      "approvalNumber": "国药准字H20203321",
+      "inn": "Bevacizumab",
+      "genericName": "贝伐珠单抗",
+      "productName": "贝伐珠单抗注射液",
+      "productNameEn": "Bevacizumab Injection",
+      "brandName": {
+        "cn": "安维汀",
+        "en": "Avastin"
+      },
+      "category": "生物制品",
+      "formulation": "注射剂",
+      "specification": "100mg/4mL/瓶",
+      "packageSpec": "1瓶/盒",
+      "mahName": "上海罗氏制药有限公司",
+      "manufacturerName": "上海罗氏制药有限公司",
+      "isOriginal": true,
+      "originator": "Genentech, Inc.",
+      "originatorSource": [
+        {
+          "type": "FDA橙皮书",
+          "url": "https://www.accessdata.fda.gov/scripts/cder/ob/results_product.cfm?Appl_Type=N&Appl_No=125085"
+        },
+        {
+          "type": "药监局公告",
+          "url": "https://www.nmpa.gov.cn/xxgk/ggtg/qtggtg/20200520120001127.html"
+        }
+      ],
+      "approvalDate": "2020-05-20",
+      "lastUpdated": "2024-03-15"
+    },
+    {
+      "id": "7",
+      "registrationType": "境内生产药品",
+      "identifier": "国药准字Z20223366",
+      "approvalNumber": "国药准字Z20223366",
+      "inn": "",
+      "genericName": "复方丹参",
+      "productName": "复方丹参滴丸",
+      "productNameEn": "Compound Danshen Dripping Pills",
+      "brandName": {
+        "cn": "复方丹参滴丸"
+      },
+      "category": "中药",
+      "formulation": "滴丸",
+      "specification": "每丸重27mg",
+      "packageSpec": "180丸/瓶",
+      "mahName": "天士力医药集团股份有限公司",
+      "manufacturerName": "天士力医药集团股份有限公司",
+      "isOriginal": true,
+      "originator": "天士力医药集团股份有限公司",
+      "originatorSource": [
+        {
+          "type": "药监局公告",
+          "url": "https://www.nmpa.gov.cn/xxgk/ggtg/qtggtg/20220830120001127.html"
+        }
+      ],
+      "originalException": "中药创新药",
+      "approvalDate": "2022-08-30",
+      "lastUpdated": "2024-03-15"
+    },
+    {
+      "id": "8",
+      "registrationType": "境内生产药品",
+      "identifier": "国药准字H20023156",
+      "inn": "Ibuprofen",
       "genericName": "布洛芬",
-      "productName": "布洛芬缓释胶囊",
+      "productName": "布洛芬片",
       "brandName": {
         "cn": "芬必得",
-        "en": "Brufen"
+        "en": "Fenbid"
+      },
+      "category": "化学药品",
+      "formulation": "片剂",
+      "specification": "0.2g",
+      "mahName": "中美天津史克制药有限公司",
+      "manufacturerName": "中美天津史克制药有限公司",
+      "isOriginal": true,
+      "originator": "GlaxoSmithKline plc",
+      "originatorSource": [
+        {
+          "type": "FDA橙皮书",
+          "url": "https://www.accessdata.fda.gov/scripts/cder/ob/results_product.cfm?Appl_Type=N&Appl_No=017463"
+        }
+      ],
+      "approvalDate": "2002-06-15",
+      "lastUpdated": "2024-03-15"
+    },
+    {
+      "id": "9",
+      "registrationType": "境外生产药品",
+      "identifier": "国药准字H20200024",
+      "inn": "Ibuprofen",
+      "genericName": "布洛芬",
+      "productName": "布洛芬混悬液",
+      "productNameEn": "Ibuprofen Suspension",
+      "brandName": {
+        "cn": "布布",
+        "en": "Bubu"
+      },
+      "category": "化学药品",
+      "formulation": "混悬液",
+      "specification": "100ml:2g",
+      "mahName": "强生（中国）投资有限公司",
+      "manufacturerName": "Johnson & Johnson GmbH",
+      "isOriginal": false,
+      "originator": "GlaxoSmithKline plc",
+      "approvalDate": "2020-03-20",
+      "lastUpdated": "2024-03-15"
+    },
+    {
+      "id": "10",
+      "registrationType": "境外生产药品",
+      "identifier": "国药准字H20180088",
+      "inn": "Oseltamivir",
+      "genericName": "磷酸奥司他韦",
+      "productName": "磷酸奥司他韦胶囊",
+      "productNameEn": "Oseltamivir Phosphate Capsules",
+      "brandName": {
+        "cn": "达菲",
+        "en": "Tamiflu"
       },
       "category": "化学药品",
       "formulation": "胶囊",
-      "specification": "0.3g",
-      "mahName": "中美史克",
-      "manufacturerName": "中美天津史克制药有限公司",
-      "isOriginal": false,
-      "originator": "Mylan",
-      "lastUpdated": "2024-03-20"
+      "specification": "75mg",
+      "mahName": "Roche Pharma (Schweiz) AG",
+      "manufacturerName": "F. Hoffmann-La Roche Ltd",
+      "isOriginal": true,
+      "originator": "Roche Pharmaceuticals",
+      "originatorSource": [
+        {
+          "type": "FDA橙皮书",
+          "url": "https://www.accessdata.fda.gov/scripts/cder/ob/results_product.cfm?Appl_Type=N&Appl_No=021087"
+        }
+      ],
+      "approvalDate": "2018-09-12",
+      "lastUpdated": "2024-03-15"
     }
   ],
   "meta": {
-    "total": 6,
-    "lastUpdate": "2024-03-20T00:00:00.000Z"
+    "total": 10,
+    "lastUpdate": "2024-03-15"
   }
 } 
