@@ -12,6 +12,7 @@ import { DrugNames } from '@/components/drug/DrugNames'
 import { DrugSpecs } from '@/components/drug/DrugSpecs'
 import { OriginalInfo } from '@/components/drug/OriginalInfo'
 import { trackEvent } from '@/lib/analytics'
+import { formatBrandName } from '@/lib/utils'
 import { useEffect } from 'react'
 
 interface DrugPageProps {
@@ -33,8 +34,8 @@ const DrugPage: NextPage<DrugPageProps> = ({ drug, relatedDrugs }) => {
   return (
     <>
       <NextSeo
-        title={`${drug.productName} - ${drug.brandName.cn} | 原研药查询`}
-        description={`${drug.productName}（${drug.brandName.cn}）的详细信息，包括规格、厂商、注册信息等。`}
+        title={`${formatBrandName(drug.brandName.cn)} ${drug.productName}`}
+        description={`${formatBrandName(drug.brandName.cn)} ${drug.productName}的详细信息。由${drug.manufacturerName}生产，包含规格、适应症等权威数据。`}
       />
       
       <div className="min-h-screen bg-gray-50">

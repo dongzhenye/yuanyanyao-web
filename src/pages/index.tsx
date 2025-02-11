@@ -202,8 +202,14 @@ const HomePage: NextPage = () => {
   return (
     <>
       <NextSeo 
-        title={siteConfig.name}
-        description={siteConfig.description}
+        title={searchTerm 
+          ? `${searchTerm} 相关药品`
+          : '原研药查询 - 专业的原研药品信息平台'
+        }
+        description={searchTerm
+          ? `查看与"${searchTerm}"相关的${results.length}个药品信息，包括通用名、商品名、生产厂商等详细数据。`
+          : siteConfig.description
+        }
       />
       
       <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-white">
