@@ -94,7 +94,7 @@ export const SearchResults = ({
                     text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100
                     transition-opacity whitespace-nowrap"
                   >
-                    查看同类药品
+                    查看通用名为 {drug.genericName} 的药品
                     {drug.relatedCounts?.sameGeneric && 
                       ` (${drug.relatedCounts.sameGeneric})`
                     }

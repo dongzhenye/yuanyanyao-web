@@ -7,7 +7,6 @@ interface SearchBoxProps {
   onSearch: (query: string) => void
   placeholder?: string
   shouldFocus?: boolean
-  isSearching?: boolean
 }
 
 export const SearchBox = ({ 
@@ -16,9 +15,9 @@ export const SearchBox = ({
   onSearch, 
   placeholder,
   shouldFocus,
-  isSearching 
 }: SearchBoxProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
+  const searchTimeoutRef = useRef<NodeJS.Timeout>()
 
   useEffect(() => {
     if (shouldFocus) {
@@ -29,13 +28,26 @@ export const SearchBox = ({
   const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value
     onChange(newValue)
-    onSearch(newValue)
+    if (searchTimeoutRef.current) {
+      clearTimeout(searchTimeoutRef.current)
+    }
+    searchTimeoutRef.current = setTimeout(() => {
+      onSearch(newValue)
+    }, 300)
   }, [onChange, onSearch])
 
   const handleSuggestionSelect = useCallback((term: string) => {
     onChange(term)
     onSearch(term)
   }, [onChange, onSearch])
+
+  useEffect(() => {
+    return () => {
+      if (searchTimeoutRef.current) {
+        clearTimeout(searchTimeoutRef.current)
+      }
+    }
+  }, [])
 
   return (
     <div className="max-w-2xl mx-auto">
@@ -46,17 +58,13 @@ export const SearchBox = ({
           value={value}
           onChange={handleChange}
           placeholder={placeholder || "输入药品名称、拼音或简拼搜索"}
-          className={`w-full px-4 py-3 text-lg border border-gray-300 rounded-lg 
+          className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg 
             focus:ring-2 focus:ring-primary/20 focus:border-primary
             placeholder:text-gray-400
-            transition-all duration-200 ease-in-out
-            ${isSearching ? 'bg-gray-50' : 'bg-white'}`}
-          disabled={isSearching}
+            transition-all duration-200 ease-in-out"
         />
         <div className="absolute right-3 top-1/2 -translate-y-1/2">
-          {isSearching ? (
-            <div className="w-5 h-5 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-          ) : value && (
+          {value && (
             <button
               onClick={() => {
                 onChange('')
