@@ -15,7 +15,7 @@ interface SearchFiltersProps {
 // 精简后的筛选选项
 const FILTER_OPTIONS = {
   剂型: ['片剂', '胶囊', '注射剂', '口服液'],
-  注册: ['进口药', '国产药']
+  注册: ['境外生产药品', '境内生产药品']
 }
 
 export const SearchFilters: React.FC<SearchFiltersProps> = ({
@@ -33,13 +33,13 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
         <div className="flex flex-wrap gap-2">
           {/* 注册类型标签 */}
           <SearchTag
-            text="进口药"
+            text="境外生产药品"
             type="注册"
             onClick={() => onTagClick({ text: "境外生产药品", type: "注册" })}
             active={activeFilters.includes("境外生产药品")}
           />
           <SearchTag
-            text="国产药"
+            text="境内生产药品"
             type="注册"
             onClick={() => onTagClick({ text: "境内生产药品", type: "注册" })}
             active={activeFilters.includes("境内生产药品")}

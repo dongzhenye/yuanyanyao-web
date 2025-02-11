@@ -14,9 +14,9 @@ import { Footer } from '@/components/layout/Footer'
 
 // 添加筛选选项配置
 const FILTER_OPTIONS = {
-  剂型: ['片剂', '胶囊', '肠溶片', '注射剂'],
+  剂型: ['片剂', '胶囊', '注射剂', '口服液'],
   分类: ['化学药品', '生物制品'],
-  注册: ['进口药', '国产药']
+  注册: ['境外生产药品', '境内生产药品']
 }
 
 interface TagClickParams {

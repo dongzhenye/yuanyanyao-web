@@ -42,7 +42,7 @@ export const DrugHeader: React.FC<DrugHeaderProps> = ({ drug }) => {
       {/* 标签信息 */}
       <div className="mt-4 flex flex-wrap gap-2">
         <span className="inline-flex items-center px-2.5 py-1 rounded-full text-sm font-medium bg-primary/10 text-primary">
-          {drug.registrationType === "境外生产药品" ? "进口药" : "国产药"}
+          {drug.registrationType}
         </span>
         <span className="inline-flex items-center px-2.5 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-600">
           {drug.formulation}

@@ -3,7 +3,7 @@ import Link from 'next/link'
 import type { SearchResultItem } from '@/lib/types'
 import { HighlightText } from './HighlightText'
 import { SearchTag } from './SearchTag'
-import { formatRegistrationType, formatBrandName } from '@/lib/utils'
+import { formatBrandName } from '@/lib/utils'
 import type { FuseResultMatch } from 'fuse.js'
 
 interface SearchResultsProps {
@@ -59,13 +59,8 @@ export const SearchResults = ({
 
   const handleTagClick = (e: React.MouseEvent, tag: { text: string; type: string }) => {
     e.preventDefault()
-    // 如果是注册类型标签，需要转换回后端值
-    if (tag.type === "注册") {
-      const backendValue = tag.text === "进口药" ? "境外生产药品" : "境内生产药品"
-      onTagClick?.({ text: backendValue, type: tag.type })
-    } else {
-      onTagClick?.(tag)
-    }
+    // 直接使用原始值，不需要转换
+    onTagClick?.(tag)
   }
 
   return (
@@ -129,10 +124,10 @@ export const SearchResults = ({
             <div className="flex flex-col items-end gap-1.5">
               <div className="flex flex-wrap gap-2 justify-end" onClick={e => e.preventDefault()}>
                 <SearchTag 
-                  text={formatRegistrationType(drug.registrationType)}
+                  text={drug.registrationType}
                   type="注册"
                   onClick={(e) => handleTagClick(e, { 
-                    text: formatRegistrationType(drug.registrationType), 
+                    text: drug.registrationType, 
                     type: "注册" 
                   })}
                   active={activeFilters.includes(drug.registrationType)}
