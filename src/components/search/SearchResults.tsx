@@ -47,12 +47,31 @@ export const SearchResults = ({
         <p className="text-gray-500">未找到相关药品</p>
         <p className="mt-2 text-sm text-gray-400">
           建议：
-          <ul className="mt-1">
+          <ul className="mt-1 space-y-1">
             <li>• 检查输入是否正确</li>
-            <li>• 尝试使用药品通用名</li>
-            <li>• 使用更简单的关键词</li>
+            <li>• 尝试使用药品通用名 <span className="text-gray-500">(比如 布洛芬)</span></li>
+            <li>• 尝试使用拼音 <span className="text-gray-500">(比如 buluofen)</span></li>
           </ul>
         </p>
+        <div className="mt-6">
+          <a
+            href="https://github.com/dongzhenye/yuanyanyao/issues"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-primary hover:text-primary/80 border border-primary/20 rounded-full hover:bg-primary/5 transition-colors"
+          >
+            <svg 
+              viewBox="0 0 24 24" 
+              fill="none" 
+              stroke="currentColor" 
+              className="w-4 h-4"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            <span>我要贡献</span>
+            <span className="text-gray-500">药品数据</span>
+          </a>
+        </div>
       </div>
     )
   }
