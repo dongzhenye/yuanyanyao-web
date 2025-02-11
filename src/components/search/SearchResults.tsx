@@ -78,28 +78,16 @@ export const SearchResults = ({
         >
           <div className="flex justify-between items-start gap-4">
             <div className="flex-1 min-w-0">
-              <h3 className="font-medium text-lg text-primary truncate">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault()
-                    onRelatedSearch('generic', drug.genericName)
-                  }}
-                  className="group relative hover:underline hover:text-primary-dark"
-                >
-                  <HighlightText 
-                    text={drug.productName}
-                    matches={getMatches(drug.matches, 'productName')}
-                  />
-                  <span className="absolute -top-8 left-1/2 -translate-x-1/2 px-2 py-1 
-                    text-xs text-white bg-gray-800 rounded opacity-0 group-hover:opacity-100
-                    transition-opacity whitespace-nowrap"
-                  >
-                    查看通用名为 {drug.genericName} 的药品
-                    {drug.relatedCounts?.sameGeneric && 
-                      ` (${drug.relatedCounts.sameGeneric})`
-                    }
+              <h3 className="font-medium text-lg text-primary truncate flex items-center gap-2">
+                <HighlightText 
+                  text={drug.productName}
+                  matches={getMatches(drug.matches, 'productName')}
+                />
+                {drug.isOriginal && (
+                  <span className="inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-rose-50 text-rose-600">
+                    原研
                   </span>
-                </button>
+                )}
               </h3>
               <div className="mt-1 text-gray-600">
                 <button

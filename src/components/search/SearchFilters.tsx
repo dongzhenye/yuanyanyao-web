@@ -12,9 +12,9 @@ interface SearchFiltersProps {
   onClearFilters: () => void
 }
 
+// 精简后的筛选选项
 const FILTER_OPTIONS = {
-  剂型: ['片剂', '胶囊', '肠溶片', '注射剂'],
-  分类: ['化学药品', '生物制品', '中药', '天然药物'],
+  剂型: ['片剂', '胶囊', '注射剂', '口服液'],
   注册: ['进口药', '国产药']
 }
 
@@ -31,14 +31,6 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
           筛选:
         </span>
         <div className="flex flex-wrap gap-2">
-          {/* 原研药标签（移到最前面） */}
-          <SearchTag
-            text="原研药"
-            type="原研"
-            onClick={() => onTagClick({ text: "原研药", type: "原研" })}
-            active={activeFilters.includes("原研药")}
-          />
-
           {/* 注册类型标签 */}
           <SearchTag
             text="进口药"
@@ -61,17 +53,6 @@ export const SearchFilters: React.FC<SearchFiltersProps> = ({
               type="剂型"
               onClick={() => onTagClick({ text: form, type: "剂型" })}
               active={activeFilters.includes(form)}
-            />
-          ))}
-
-          {/* 分类标签 */}
-          {FILTER_OPTIONS.分类.map(category => (
-            <SearchTag
-              key={category}
-              text={category}
-              type="分类"
-              onClick={() => onTagClick({ text: category, type: "分类" })}
-              active={activeFilters.includes(category)}
             />
           ))}
         </div>
