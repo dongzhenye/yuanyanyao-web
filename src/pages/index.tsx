@@ -11,6 +11,7 @@ import type { SearchResultItem, SearchHistory } from '@/lib/types'
 import { SearchResults } from '@/components/search/SearchResults'
 import { SearchFilters } from '@/components/search/SearchFilters'
 import { Footer } from '@/components/layout/Footer'
+import { trackEvent } from '@/lib/analytics'
 
 // 添加筛选选项配置
 const FILTER_OPTIONS = {
@@ -95,6 +96,14 @@ const HomePage: NextPage = () => {
       
       setResults(searchResults)
       setIsSearching(false)
+      
+      // 添加搜索事件跟踪
+      if (query.trim()) {
+        trackEvent('search', {
+          term: query,
+          results_count: searchResults.length
+        })
+      }
     }, 300)
   }, [activeFilters])
 
@@ -110,6 +119,11 @@ const HomePage: NextPage = () => {
         // 注册类型互斥，移除其他注册类型
         return [...prev.filter(f => !f.includes('生产药品')), text]
       }
+      
+      // 添加筛选事件跟踪
+      trackEvent('filter_change', {
+        filters: newFilters
+      })
       
       return newFilters
     })
@@ -176,6 +190,13 @@ const HomePage: NextPage = () => {
         setActiveFilters([])
         break
     }
+    
+    // 添加关联搜索事件跟踪
+    trackEvent('related_search', {
+      from: searchTerm,
+      to: value,
+      type
+    })
   }, [searchTerm, activeFilters])
   
   return (

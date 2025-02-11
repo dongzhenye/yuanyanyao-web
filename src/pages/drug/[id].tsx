@@ -11,6 +11,8 @@ import { BasicInfo } from '@/components/drug/BasicInfo'
 import { DrugNames } from '@/components/drug/DrugNames'
 import { DrugSpecs } from '@/components/drug/DrugSpecs'
 import { OriginalInfo } from '@/components/drug/OriginalInfo'
+import { trackEvent } from '@/lib/analytics'
+import { useEffect } from 'react'
 
 interface DrugPageProps {
   drug: DrugWithPinyin
@@ -21,6 +23,13 @@ interface DrugPageProps {
 }
 
 const DrugPage: NextPage<DrugPageProps> = ({ drug, relatedDrugs }) => {
+  useEffect(() => {
+    trackEvent('view_drug', {
+      drug_id: drug.id,
+      drug_name: drug.productName
+    })
+  }, [drug.id, drug.productName])
+
   return (
     <>
       <NextSeo
