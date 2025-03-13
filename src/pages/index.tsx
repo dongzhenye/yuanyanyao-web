@@ -315,8 +315,6 @@ const HomePage: NextPage = () => {
             isLoading={isSearching}
             searchTerm={searchTerm}
             onRelatedSearch={handleRelatedSearch}
-            onTagClick={handleTagClick}
-            activeFilters={activeFilters}
           />
         </main>
 
