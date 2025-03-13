@@ -276,33 +276,19 @@ const HomePage: NextPage = () => {
 
           {/* 只在有搜索词时显示筛选组件 */}
           {searchTerm && (
-            <SearchFilters
-              activeFilters={activeFilters}
-              onTagClick={handleTagClick}
-              onClearFilters={handleClearFilters}
-            />
-          )}
-
-          {/* 在筛选区域和搜索结果之间添加统一的状态栏 */}
-          {searchTerm && (
-            <div className="flex items-center justify-between py-3 border-b border-gray-200">
-              {/* 左侧：结果统计 */}
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                <span className="font-medium">
-                  找到 {results.length} 个结果
-                </span>
-                {activeFilters.length > 0 && (
-                  <span className="text-gray-400">
-                    (已筛选)
-                  </span>
-                )}
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-4">
+              <div className="flex-grow">
+                <SearchFilters
+                  activeFilters={activeFilters}
+                  onTagClick={handleTagClick}
+                  onClearFilters={handleClearFilters}
+                />
               </div>
-
-              {/* 右侧：搜索历史 - 简化版本 */}
+              
               {searchHistory.length > 0 && (
                 <button
                   onClick={handleHistoryClick}
-                  className="text-sm text-primary hover:text-primary-dark hover:underline"
+                  className="text-sm whitespace-nowrap text-primary hover:text-primary-dark hover:underline"
                 >
                   返回上次搜索
                 </button>
