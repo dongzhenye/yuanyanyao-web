@@ -51,8 +51,8 @@ export const DrugHeader: React.FC<DrugHeaderProps> = ({ drug }) => {
           <div className="mt-2 text-base text-gray-400">
             {formatBrandName(drug.brandName.en)}
             {drug.productNameEn && (
-              <span className="ml-2">
-                ({drug.productNameEn})
+              <span className="ml-1">
+                {drug.productNameEn}
               </span>
             )}
           </div>
