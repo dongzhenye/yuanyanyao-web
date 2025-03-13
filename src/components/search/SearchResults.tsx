@@ -90,92 +90,87 @@ export const SearchResults = ({
           href={`/drug/${drug.id}`}
           className="block bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow"
         >
-          <div className="flex justify-between gap-4">
-            <div className="min-w-0 flex-1">
-              {/* 标题行：商品名 + 产品名 + 原研标签 */}
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault()
-                    onRelatedSearch('brand', drug.brandName.cn)
-                  }}
-                  className="text-xl font-bold text-gray-900 hover:text-primary truncate"
-                >
+          <div className="flex flex-col">
+            {/* PC版第一行（商品名+产品名+原研药标签），移动版仅包含商品名+产品名 */}
+            <div className="flex flex-wrap items-center gap-2">
+              {/* 商品名 - 如果中文不存在则显示英文 */}
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  onRelatedSearch('brand', drug.brandName.cn || drug.brandName.en || '')
+                }}
+                className="text-xl font-bold text-gray-900 hover:text-primary break-all"
+              >
+                {drug.brandName.cn ? (
                   <HighlightText 
                     text={formatBrandName(drug.brandName.cn)}
                     matches={getMatches(drug.matches, 'brandName.cn')}
                   />
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault()
-                    onRelatedSearch('generic', drug.productName)
-                  }}
-                  className="text-xl text-gray-600 hover:text-primary truncate"
-                >
+                ) : drug.brandName.en ? (
+                  <HighlightText 
+                    text={formatBrandName(drug.brandName.en)}
+                    matches={getMatches(drug.matches, 'brandName.en')}
+                  />
+                ) : null}
+              </button>
+              
+              {/* 产品名 - 如果中文不存在则显示英文 */}
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  onRelatedSearch('generic', drug.productName || drug.productNameEn || '')
+                }}
+                className="text-xl text-gray-600 hover:text-primary break-all"
+              >
+                {drug.productName ? (
                   <HighlightText 
                     text={drug.productName}
                     matches={getMatches(drug.matches, 'productName')}
                   />
-                </button>
-                {drug.isOriginal && (
-                  <span className="inline-flex items-center gap-0.5 px-2.5 py-1 text-[15px] rounded-full bg-primary/10 text-primary whitespace-nowrap">
-                    <svg 
-                      viewBox="0 0 24 24" 
-                      fill="currentColor" 
-                      className="w-4 h-4"
-                    >
-                      <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
-                    </svg>
-                    <span>原研药</span>
-                  </span>
-                )}
-              </div>
-
-              {/* 英文商品名 */}
-              {drug.brandName.en && (
-                <div className="mt-1 text-sm text-gray-400">
-                  ({formatBrandName(drug.brandName.en)})
-                </div>
-              )}
-
-              {/* 厂商名称 */}
-              <div className="mt-2 text-sm text-gray-500 truncate">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault()
-                    onRelatedSearch('manufacturer', drug.manufacturerName)
-                  }}
-                  className="hover:text-primary"
-                >
+                ) : drug.productNameEn ? (
                   <HighlightText 
-                    text={drug.manufacturerName}
-                    matches={getMatches(drug.matches, 'manufacturerName')}
+                    text={drug.productNameEn}
+                    matches={getMatches(drug.matches, 'productNameEn')}
                   />
-                </button>
-              </div>
+                ) : null}
+              </button>
+              
+              {/* 原研药标签 */}
+              {drug.isOriginal && (
+                <span className="inline-flex items-center gap-0.5 px-2.5 py-1 text-[15px] rounded-full bg-primary/10 text-primary whitespace-nowrap">
+                  <svg 
+                    viewBox="0 0 24 24" 
+                    fill="currentColor" 
+                    className="w-4 h-4"
+                  >
+                    <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
+                  </svg>
+                  <span>原研药</span>
+                </span>
+              )}
             </div>
 
-            {/* 标签组 - 只保留注册类型和剂型 */}
-            <div className="flex flex-col items-end gap-1.5">
-              <SearchTag 
-                text={drug.registrationType}
-                type="注册"
-                onClick={(e) => handleTagClick(e, { 
-                  text: drug.registrationType, 
-                  type: "注册" 
-                })}
-                active={activeFilters.includes(drug.registrationType)}
-              />
-              <SearchTag 
-                text={drug.formulation}
-                type="剂型"
-                onClick={(e) => handleTagClick(e, { 
-                  text: drug.formulation, 
-                  type: "剂型" 
-                })}
-                active={activeFilters.includes(drug.formulation)}
-              />
+            {/* 英文商品名 - 仅在PC版且中文商品名存在时以弱化形式显示 */}
+            {drug.brandName.cn && drug.brandName.en && (
+              <div className="hidden md:block mt-1 text-sm text-gray-400">
+                {formatBrandName(drug.brandName.en)}
+              </div>
+            )}
+
+            {/* 厂商名称 */}
+            <div className="mt-3 text-sm text-gray-500">
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  onRelatedSearch('manufacturer', drug.manufacturerName)
+                }}
+                className="hover:text-primary"
+              >
+                <HighlightText 
+                  text={drug.manufacturerName}
+                  matches={getMatches(drug.matches, 'manufacturerName')}
+                />
+              </button>
             </div>
           </div>
         </Link>
