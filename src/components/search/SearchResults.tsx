@@ -2,7 +2,6 @@ import React from 'react'
 import Link from 'next/link'
 import type { SearchResultItem } from '@/lib/types'
 import { HighlightText } from './HighlightText'
-import { SearchTag } from './SearchTag'
 import { formatBrandName } from '@/lib/utils'
 import type { FuseResultMatch } from 'fuse.js'
 
@@ -11,8 +10,6 @@ interface SearchResultsProps {
   isLoading?: boolean
   searchTerm?: string
   onRelatedSearch: (type: 'generic' | 'brand' | 'manufacturer', value: string) => void
-  onTagClick?: (tag: { text: string; type: string }) => void
-  activeFilters?: string[]
 }
 
 const getMatches = (matches: SearchResultItem['matches'], key: string): ReadonlyArray<FuseResultMatch> => {
@@ -25,8 +22,6 @@ export const SearchResults = ({
   isLoading, 
   searchTerm,
   onRelatedSearch,
-  onTagClick,
-  activeFilters = []
 }: SearchResultsProps) => {
   if (isLoading) {
     return (
@@ -74,12 +69,6 @@ export const SearchResults = ({
         </div>
       </div>
     )
-  }
-
-  const handleTagClick = (e: React.MouseEvent, tag: { text: string; type: string }) => {
-    e.preventDefault()
-    // 直接使用原始值，不需要转换
-    onTagClick?.(tag)
   }
 
   return (
