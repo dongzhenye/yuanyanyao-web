@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Drug } from '@/lib/types';
 import { renderDrugImage } from '@/lib/drugImageRenderer';
+import Image from 'next/image';
 
 interface BaseDrugImageProps {
   drug: Drug;
@@ -11,7 +12,30 @@ interface BaseDrugImageProps {
   onError?: (error: Error) => void;
 }
 
-export const BaseDrugImage: React.FC<BaseDrugImageProps> = ({
+// 真实图片组件
+const RealDrugImage: React.FC<BaseDrugImageProps> = ({
+  drug,
+  width = 300,
+  height = 300,
+  className,
+  onLoad,
+  onError
+}) => (
+  <div className={`relative ${className}`} style={{ width, height }}>
+    <Image
+      src={drug.imageUrl!}
+      alt={`${drug.brandName.cn} ${drug.productName}`}
+      fill
+      className="object-contain"
+      sizes={width <= 96 ? '96px' : '(max-width: 768px) 100vw, 50vw'}
+      onLoad={onLoad}
+      onError={() => onError?.(new Error('Failed to load image'))}
+    />
+  </div>
+);
+
+// 自动生成图片组件
+const GeneratedDrugImage: React.FC<BaseDrugImageProps> = ({
   drug,
   width = 300,
   height = 300,
@@ -23,7 +47,12 @@ export const BaseDrugImage: React.FC<BaseDrugImageProps> = ({
   const mountedRef = useRef(true);
 
   useEffect(() => {
-    // 在组件挂载时获取 DPR，并在整个生命周期保持一致
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -35,7 +64,6 @@ export const BaseDrugImage: React.FC<BaseDrugImageProps> = ({
           height,
           devicePixelRatio: dpr
         });
-        // 确保组件仍然挂载时才调用回调
         if (mountedRef.current) {
           onLoad?.();
         }
@@ -48,11 +76,6 @@ export const BaseDrugImage: React.FC<BaseDrugImageProps> = ({
     };
 
     render();
-
-    // 清理函数
-    return () => {
-      mountedRef.current = false;
-    };
   }, [drug, width, height, onLoad, onError]);
 
   return (
@@ -66,4 +89,12 @@ export const BaseDrugImage: React.FC<BaseDrugImageProps> = ({
       }}
     />
   );
+};
+
+// 主组件
+export const BaseDrugImage: React.FC<BaseDrugImageProps> = (props) => {
+  if (props.drug.imageUrl) {
+    return <RealDrugImage {...props} />;
+  }
+  return <GeneratedDrugImage {...props} />;
 }; 

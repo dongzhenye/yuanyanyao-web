@@ -8,7 +8,7 @@ interface DrugImageThumbnailProps {
 
 export const DrugImageThumbnail: React.FC<DrugImageThumbnailProps> = ({ drug }) => {
   return (
-    <div className="w-24 h-24 flex-shrink-0">
+    <div className="w-24 h-24 flex-shrink-0 relative">
       <BaseDrugImage 
         drug={drug}
         width={96}

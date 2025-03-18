@@ -21,7 +21,7 @@ export const DrugImage: React.FC<DrugImageProps> = ({ drug }) => {
         </div>
       </div>
       <p className="text-xs text-gray-500 mt-2 text-center">
-        {drug.imageUrl ? '' : '暂无实际图片，显示为占位图'}
+        {drug.imageUrl ? '实际药品图片' : '自动生成的示意图'}
       </p>
     </div>
   );
