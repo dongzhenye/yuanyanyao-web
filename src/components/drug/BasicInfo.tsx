@@ -1,6 +1,6 @@
 import React from 'react'
 import { DrugWithPinyin } from '@/lib/types'
-import { SearchTag } from '../search/SearchTag'
+import { Tag } from '@/components/common/Tag'
 
 interface BasicInfoProps {
   drug: DrugWithPinyin
@@ -24,7 +24,7 @@ export const BasicInfo: React.FC<BasicInfoProps> = ({ drug }) => {
           <div>
             <div className="text-sm text-gray-500">注册类型</div>
             <div className="mt-1">
-              <SearchTag 
+              <Tag 
                 text={drug.registrationType}
                 type="其他"
               />
@@ -35,7 +35,7 @@ export const BasicInfo: React.FC<BasicInfoProps> = ({ drug }) => {
           <div>
             <div className="text-sm text-gray-500">药品类型</div>
             <div className="mt-1">
-              <SearchTag 
+              <Tag 
                 text={drug.isOTC ? 'OTC药品' : '处方药'}
                 type={drug.isOTC ? 'success' : 'warning'}
               />
@@ -46,7 +46,7 @@ export const BasicInfo: React.FC<BasicInfoProps> = ({ drug }) => {
           <div>
             <div className="text-sm text-gray-500">剂型</div>
             <div className="mt-1">
-              <SearchTag 
+              <Tag 
                 text={drug.formulation}
                 type="其他"
               />
@@ -60,7 +60,7 @@ export const BasicInfo: React.FC<BasicInfoProps> = ({ drug }) => {
           <div>
             <div className="text-sm text-gray-500">分类</div>
             <div className="mt-1">
-              <SearchTag 
+              <Tag 
                 text={drug.category}
                 type="其他"
               />

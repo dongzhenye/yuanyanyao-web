@@ -1,5 +1,5 @@
 import React from 'react'
-import { SearchTag } from './SearchTag'
+import { Tag } from '@/components/common/Tag'
 
 interface ActiveFiltersProps {
   filters: string[]
@@ -15,7 +15,7 @@ export const ActiveFilters = ({ filters, onRemove, onClear }: ActiveFiltersProps
       <span className="text-gray-500">已选条件：</span>
       <div className="flex flex-wrap gap-2">
         {filters.map(filter => (
-          <SearchTag
+          <Tag
             key={filter}
             text={filter}
             onClick={() => onRemove(filter)}
