@@ -1,15 +1,20 @@
 import React from 'react'
 import Link from 'next/link'
 import { DrugWithPinyin } from '@/lib/types'
-import { formatBrandName } from '@/lib/utils'
+import { BrandName } from '@/components/common/BrandName'
 
 interface DrugHeaderProps {
   drug: DrugWithPinyin
 }
 
 export const DrugHeader: React.FC<DrugHeaderProps> = ({ drug }) => {
+  // 为面包屑导航创建纯文本格式的品牌名
+  const brandNameText = drug.brandName.cn.includes('®') || drug.brandName.cn.includes('™') 
+    ? drug.brandName.cn 
+    : `${drug.brandName.cn}®`;
+  
   // 统一的标题拼接规则
-  const titleText = `${formatBrandName(drug.brandName.cn)} ${drug.productName}`
+  const titleText = `${brandNameText} ${drug.productName}`
 
   return (
     <div>
@@ -27,7 +32,7 @@ export const DrugHeader: React.FC<DrugHeaderProps> = ({ drug }) => {
         {/* 中文名称行 */}
         <div className="flex items-center gap-2">
           <h1 className="text-xl font-bold text-gray-900">
-            {formatBrandName(drug.brandName.cn)}
+            <BrandName name={drug.brandName.cn} />
           </h1>
           <span className="text-xl text-gray-600">
             {drug.productName}
@@ -49,7 +54,7 @@ export const DrugHeader: React.FC<DrugHeaderProps> = ({ drug }) => {
         {/* 英文名称行 */}
         {drug.brandName.en && (
           <div className="mt-2 text-base text-gray-400">
-            {formatBrandName(drug.brandName.en)}
+            <BrandName name={drug.brandName.en} />
             {drug.productNameEn && (
               <span className="ml-1">
                 {drug.productNameEn}

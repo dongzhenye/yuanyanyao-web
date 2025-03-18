@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { DrugWithPinyin } from '@/lib/types'
-import { formatBrandName } from '@/lib/utils'
+import { BrandName } from '@/components/common/BrandName'
 
 interface RelatedDrugsProps {
   sameGeneric: DrugWithPinyin[]
@@ -26,7 +26,7 @@ export const RelatedDrugs: React.FC<RelatedDrugsProps> = ({
                 className="block hover:bg-gray-50 -mx-6 px-6 py-3"
               >
                 <div className="font-medium text-gray-900">
-                  {formatBrandName(drug.brandName.cn)}
+                  <BrandName name={drug.brandName.cn} />
                 </div>
                 <div className="mt-1 text-sm text-gray-500">
                   {drug.manufacturerName}
@@ -52,7 +52,7 @@ export const RelatedDrugs: React.FC<RelatedDrugsProps> = ({
                   {drug.genericName}
                 </div>
                 <div className="mt-1 text-sm text-gray-500">
-                  {formatBrandName(drug.brandName.cn)}
+                  <BrandName name={drug.brandName.cn} />
                 </div>
               </Link>
             ))}
