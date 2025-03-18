@@ -7,11 +7,10 @@ import { SearchBox } from '@/components/search/SearchBox'
 import { searchDrugs } from '@/lib/search'
 import { siteConfig } from '@/lib/config'
 import drugsData from '@/data/drugs.json'
-import type { SearchResultItem } from '@/lib/types'
+import type { SearchResultItem, SearchHistoryItem } from '@/lib/types'
 import { SearchResults } from '@/components/search/SearchResults'
 import { SearchFilters } from '@/components/search/SearchFilters'
 import { SearchHistory } from '@/components/search/SearchHistory'
-import { useSearchHistory } from '@/hooks/useSearchHistory'
 import { Footer } from '@/components/layout/Footer'
 import { trackEvent } from '@/lib/analytics'
 
@@ -32,7 +31,14 @@ const HomePage: NextPage = () => {
   const [isSearching, setIsSearching] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [activeFilters, setActiveFilters] = useState<string[]>([])
-  const { searchHistory, addToHistory } = useSearchHistory()
+  const [searchHistory, setSearchHistory] = useState<SearchHistoryItem[]>(() => {
+    try {
+      const saved = localStorage.getItem('searchHistory')
+      return saved ? JSON.parse(saved) : []
+    } catch {
+      return []
+    }
+  })
   const [shouldFocusInput, setShouldFocusInput] = useState(false)
 
   const handleSearch = useCallback((query: string) => {
@@ -134,27 +140,40 @@ const HomePage: NextPage = () => {
     }
   }, [activeFilters, handleSearch, searchTerm])
 
+  // 保存搜索历史到 localStorage
+  useEffect(() => {
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
+  }, [searchHistory])
+
   // 处理关联搜索
   const handleRelatedSearch = useCallback((type: 'generic' | 'brand' | 'manufacturer', value: string) => {
     // 保存历史记录
-    addToHistory(searchTerm, activeFilters)
+    const currentState = {
+      searchTerm,
+      filters: [...activeFilters],
+      timestamp: Date.now()
+    }
+    setSearchHistory(prev => {
+      const isDuplicate = prev[0] && 
+        prev[0].searchTerm === searchTerm && 
+        prev[0].filters.length === activeFilters.length &&
+        prev[0].filters.every((f, i) => f === activeFilters[i])
+      
+      if (isDuplicate) return prev
+      return [currentState, ...prev].slice(0, 10)
+    })
     
     // 更新搜索词和筛选条件
     setSearchTerm(value)
     setShouldFocusInput(true) // 触发输入框聚焦
     
     // 根据类型设置筛选条件
-    switch(type) {
-      case 'generic':
-        setActiveFilters(prev => 
-          prev.filter(f => ['registrationType', 'formulation'].includes(f))
-        )
-        break
-      case 'brand':
-      case 'manufacturer':
-        setActiveFilters([])
-        break
+    const filterMap = {
+      generic: (prev: string[]) => prev.filter(f => ['registrationType', 'formulation'].includes(f)),
+      brand: () => [],
+      manufacturer: () => []
     }
+    setActiveFilters(filterMap[type])
     
     // 添加关联搜索事件跟踪
     trackEvent('related_search', {
@@ -162,7 +181,7 @@ const HomePage: NextPage = () => {
       to: value,
       type
     })
-  }, [searchTerm, activeFilters, addToHistory])
+  }, [searchTerm, activeFilters])
 
   // 处理历史记录恢复
   const handleHistoryRestore = useCallback((searchTerm: string, filters: string[]) => {
