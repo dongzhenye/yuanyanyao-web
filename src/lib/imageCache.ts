@@ -2,6 +2,7 @@ interface CacheKey {
   drugId: string;
   width: number;
   height: number;
+  devicePixelRatio: number;
 }
 
 export const imageCache = new Map<string, string>();

@@ -1,6 +1,6 @@
 import { Drug, RenderOptions } from './types';
 import { getFormulationIcon, loadIcon, CERTIFICATION_ICONS } from './iconManager';
-import { getCachedImage, setCachedImage } from './imageCache';
+import { getCachedImage, setCachedImage, clearCache } from './imageCache';
 
 // 生成背景颜色
 export const generateBackgroundColor = (brandName: string, manufacturer: string): string => {
@@ -76,11 +76,12 @@ export const renderDrugImage = async (
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
 
-  // 简化缓存键，不再依赖DPR
+  // 包含 devicePixelRatio 的缓存键
   const cacheKey = {
     drugId: drug.id,
     width,
-    height
+    height,
+    devicePixelRatio
   };
   
   const cachedImage = getCachedImage(cacheKey);
@@ -93,18 +94,23 @@ export const renderDrugImage = async (
           reject(new Error('Failed to get canvas context'));
           return;
         }
-        ctx.scale(devicePixelRatio, devicePixelRatio);
-        ctx.clearRect(0, 0, width, height);
-        ctx.drawImage(img, 0, 0, width, height);
+        // 直接绘制缓存的图片，不需要再次缩放
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         resolve();
       };
-      img.onerror = () => reject(new Error('Failed to load cached image'));
+      img.onerror = () => {
+        console.warn('Failed to load cached image, regenerating...');
+        // 缓存加载失败时，删除缓存并重新渲染
+        clearCache(cacheKey);
+        reject(new Error('Failed to load cached image'));
+      };
     });
     return;
   }
 
-  // 清除画布
-  ctx.clearRect(0, 0, width, height);
+  // 清除画布并设置缩放
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.scale(devicePixelRatio, devicePixelRatio);
 
   // 获取药品名称和厂商
