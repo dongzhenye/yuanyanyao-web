@@ -33,7 +33,7 @@
         }
       ],
       "approvalDate": "2014-05-20",
-      "lastUpdated": "2024-03-15",
+      "lastUpdated": "2025-03-17",
       "isOTC": false
     },
     {
@@ -64,7 +64,7 @@
         }
       ],
       "approvalDate": "2020-12-15",
-      "lastUpdated": "2024-03-15",
+      "lastUpdated": "2025-03-17",
       "isOTC": false
     },
     {
@@ -88,7 +88,7 @@
       "originator": "Pfizer Inc.",
       "originalException": "原研专利到期仿制",
       "approvalDate": "2022-08-30",
-      "lastUpdated": "2024-03-15",
+      "lastUpdated": "2025-03-17",
       "isOTC": false
     },
     {
@@ -120,7 +120,7 @@
         }
       ],
       "approvalDate": "2022-02-11",
-      "lastUpdated": "2024-03-15",
+      "lastUpdated": "2025-03-17",
       "isOTC": false
     },
     {
@@ -152,7 +152,7 @@
         }
       ],
       "approvalDate": "2013-05-20",
-      "lastUpdated": "2024-03-15",
+      "lastUpdated": "2025-03-17",
       "isOTC": true
     },
     {
@@ -187,7 +187,7 @@
         }
       ],
       "approvalDate": "2020-05-20",
-      "lastUpdated": "2024-03-15",
+      "lastUpdated": "2025-03-17",
       "isOTC": false
     },
     {
@@ -218,7 +218,7 @@
       ],
       "originalException": "中药创新药",
       "approvalDate": "2022-08-30",
-      "lastUpdated": "2024-03-15",
+      "lastUpdated": "2025-03-17",
       "isOTC": true
     },
     {
@@ -246,7 +246,7 @@
         }
       ],
       "approvalDate": "2002-06-15",
-      "lastUpdated": "2024-03-15",
+      "lastUpdated": "2025-03-17",
       "isOTC": true
     },
     {
@@ -269,7 +269,7 @@
       "isOriginal": false,
       "originator": "GlaxoSmithKline plc",
       "approvalDate": "2020-03-20",
-      "lastUpdated": "2024-03-15",
+      "lastUpdated": "2025-03-17",
       "isOTC": true
     },
     {
@@ -298,7 +298,7 @@
         }
       ],
       "approvalDate": "2018-09-12",
-      "lastUpdated": "2024-03-15",
+      "lastUpdated": "2025-03-17",
       "isOTC": false
     },
     {
@@ -321,7 +321,7 @@
       "isOriginal": true,
       "originator": "Bayer AG",
       "approvalDate": "2016-01-01",
-      "lastUpdated": "2024-03-15",
+      "lastUpdated": "2025-03-17",
       "isOTC": true
     },
     {
@@ -344,7 +344,7 @@
       "isOriginal": true,
       "originator": "Johnson & Johnson",
       "approvalDate": "2016-02-01",
-      "lastUpdated": "2024-03-15",
+      "lastUpdated": "2025-03-17",
       "isOTC": true
     },
     {
@@ -367,12 +367,12 @@
       "isOriginal": true,
       "originator": "Roche",
       "approvalDate": "2016-03-01",
-      "lastUpdated": "2024-03-15",
+      "lastUpdated": "2025-03-17",
       "isOTC": false
     }
   ],
   "meta": {
     "total": 13,
-    "lastUpdate": "2024-03-15"
+    "lastUpdate": "2025-03-17"
   }
 } 
