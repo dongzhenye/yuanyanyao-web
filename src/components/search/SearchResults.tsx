@@ -2,8 +2,8 @@ import React from 'react'
 import Link from 'next/link'
 import type { SearchResultItem } from '@/lib/types'
 import { HighlightText } from './HighlightText'
-import { formatBrandName } from '@/lib/utils'
 import type { FuseResultMatch } from 'fuse.js'
+import { BrandName } from '@/components/common/BrandName'
 
 interface SearchResultsProps {
   results: SearchResultItem[]
@@ -15,6 +15,17 @@ interface SearchResultsProps {
 const getMatches = (matches: SearchResultItem['matches'], key: string): ReadonlyArray<FuseResultMatch> => {
   const match = matches?.find(m => m.key === key)
   return match ? [{ indices: match.indices || [], key: match.key }] : []
+}
+
+// 生成药品图片的URL
+const getDrugImageUrl = (drug: SearchResultItem): string => {
+  // 如果药品有图片URL，优先使用
+  if (drug.imageUrl) {
+    return drug.imageUrl;
+  }
+  
+  // 否则使用占位图片
+  return `https://via.placeholder.com/400x400?text=${encodeURIComponent(drug.brandName.cn || drug.brandName.en || drug.genericName)}`
 }
 
 export const SearchResults = ({ 
@@ -72,94 +83,106 @@ export const SearchResults = ({
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {results.map(drug => (
         <Link
           key={drug.id}
           href={`/drug/${drug.id}`}
-          className="block bg-white p-4 rounded-lg shadow hover:shadow-md transition-shadow"
+          className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
         >
-          <div className="flex flex-col">
-            {/* PC版第一行（商品名+产品名+原研药标签），移动版仅包含商品名+产品名 */}
-            <div className="flex flex-wrap items-center gap-2">
-              {/* 商品名 - 如果中文不存在则显示英文 */}
-              <button
-                onClick={(e) => {
-                  e.preventDefault()
-                  onRelatedSearch('brand', drug.brandName.cn || drug.brandName.en || '')
-                }}
-                className="text-xl font-bold text-gray-900 hover:text-primary break-all"
-              >
-                {drug.brandName.cn ? (
-                  <HighlightText 
-                    text={formatBrandName(drug.brandName.cn)}
-                    matches={getMatches(drug.matches, 'brandName.cn')}
-                  />
-                ) : drug.brandName.en ? (
-                  <HighlightText 
-                    text={formatBrandName(drug.brandName.en)}
-                    matches={getMatches(drug.matches, 'brandName.en')}
-                  />
-                ) : null}
-              </button>
-              
-              {/* 产品名 - 如果中文不存在则显示英文 */}
-              <button
-                onClick={(e) => {
-                  e.preventDefault()
-                  onRelatedSearch('generic', drug.productName || drug.productNameEn || '')
-                }}
-                className="text-xl text-gray-600 hover:text-primary break-all"
-              >
-                {drug.productName ? (
-                  <HighlightText 
-                    text={drug.productName}
-                    matches={getMatches(drug.matches, 'productName')}
-                  />
-                ) : drug.productNameEn ? (
-                  <HighlightText 
-                    text={drug.productNameEn}
-                    matches={getMatches(drug.matches, 'productNameEn')}
-                  />
-                ) : null}
-              </button>
-              
-              {/* 原研药标签 */}
-              {drug.isOriginal && (
-                <span className="inline-flex items-center gap-0.5 px-2.5 py-1 text-[15px] rounded-full bg-primary/10 text-primary whitespace-nowrap">
-                  <svg 
-                    viewBox="0 0 24 24" 
-                    fill="currentColor" 
-                    className="w-4 h-4"
-                  >
-                    <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
-                  </svg>
-                  <span>原研药</span>
-                </span>
-              )}
+          <div className="flex items-center p-3">
+            {/* 左侧药品图片 - 宽度为1/4到1/3之间，适应移动端 */}
+            <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 bg-gray-100 rounded-md overflow-hidden">
+              <img 
+                src={getDrugImageUrl(drug)} 
+                alt={`${drug.brandName.cn || drug.brandName.en || drug.genericName}图片`}
+                className="object-contain w-full h-full p-1"
+              />
             </div>
 
-            {/* 英文商品名 - 仅在PC版且中文商品名存在时以弱化形式显示 */}
-            {drug.brandName.cn && drug.brandName.en && (
-              <div className="hidden md:block mt-1 text-sm text-gray-400">
-                {formatBrandName(drug.brandName.en)}
+            {/* 右侧信息区域 */}
+            <div className="flex-1 ml-4">
+              <div className="max-h-24 sm:max-h-28 overflow-hidden">
+                {/* 商品名和原研药标签 */}
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault()
+                      onRelatedSearch('brand', drug.brandName.cn || drug.brandName.en || '')
+                    }}
+                    className="text-base font-bold text-gray-900 hover:text-primary break-words"
+                    title={`搜索${drug.brandName.cn || drug.brandName.en || ''}相关药品`}
+                  >
+                    {drug.brandName.cn ? (
+                      <BrandName name={drug.brandName.cn} />
+                    ) : drug.brandName.en ? (
+                      <BrandName name={drug.brandName.en} />
+                    ) : null}
+                  </button>
+                  
+                  {/* 原研药标签 */}
+                  {drug.isOriginal && (
+                    <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs rounded-full bg-primary/10 text-primary whitespace-nowrap">
+                      <svg 
+                        viewBox="0 0 24 24" 
+                        fill="currentColor" 
+                        className="w-3 h-3"
+                      >
+                        <path fillRule="evenodd" d="M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clipRule="evenodd" />
+                      </svg>
+                      <span>原研药</span>
+                    </span>
+                  )}
+                </div>
+                
+                {/* 英文商品名 - 移动端隐藏，PC端显示 */}
+                {drug.brandName.cn && drug.brandName.en && (
+                  <div className="hidden md:block mt-0 text-[10px] text-gray-400">
+                    <BrandName name={drug.brandName.en} />
+                  </div>
+                )}
+                
+                {/* 产品名称 */}
+                <div className="mt-1">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault()
+                      onRelatedSearch('generic', drug.productName || drug.productNameEn || '')
+                    }}
+                    className="text-base font-normal text-gray-700 hover:text-primary break-words"
+                    title={`搜索${drug.productName || drug.productNameEn || ''}相关药品`}
+                  >
+                    {drug.productName ? (
+                      <HighlightText 
+                        text={drug.productName}
+                        matches={getMatches(drug.matches, 'productName')}
+                      />
+                    ) : drug.productNameEn ? (
+                      <HighlightText 
+                        text={drug.productNameEn}
+                        matches={getMatches(drug.matches, 'productNameEn')}
+                      />
+                    ) : null}
+                  </button>
+                </div>
               </div>
-            )}
-
-            {/* 厂商名称 */}
-            <div className="mt-3 text-sm text-gray-500">
-              <button
-                onClick={(e) => {
-                  e.preventDefault()
-                  onRelatedSearch('manufacturer', drug.manufacturerName)
-                }}
-                className="hover:text-primary"
-              >
-                <HighlightText 
-                  text={drug.manufacturerName}
-                  matches={getMatches(drug.matches, 'manufacturerName')}
-                />
-              </button>
+              
+              {/* 厂商名称 */}
+              <div className="mt-1 text-xs text-gray-700 truncate">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault()
+                    onRelatedSearch('manufacturer', drug.manufacturerName)
+                  }}
+                  className="hover:text-primary"
+                  title={`搜索${drug.manufacturerName}相关药品`}
+                >
+                  <HighlightText 
+                    text={drug.manufacturerName}
+                    matches={getMatches(drug.matches, 'manufacturerName')}
+                  />
+                </button>
+              </div>
             </div>
           </div>
         </Link>
