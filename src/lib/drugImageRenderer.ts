@@ -162,7 +162,7 @@ export const renderDrugImage = async (
     ctx.font = `bold ${badgeHeight*0.6}px sans-serif`;
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText('OTC', x + badgeWidth/2, y + badgeHeight/2);
+    ctx.fillText('OTC', x + badgeWidth/2, y + badgeHeight/2 + badgeHeight*0.05);
     ctx.restore();
   } else {
     // 绘制处方药标志
