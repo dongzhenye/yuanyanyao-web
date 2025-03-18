@@ -57,10 +57,10 @@ export const SearchBox = ({
           type="text"
           value={value}
           onChange={handleChange}
-          placeholder={placeholder || "输入药品名称、拼音或简拼搜索"}
-          className="w-full px-4 py-3 text-lg border border-gray-300 rounded-lg 
+          placeholder={placeholder || "输入药品名称或拼音"}
+          className="w-full px-4 py-3 text-[18px] border border-gray-300 rounded-lg 
             focus:ring-2 focus:ring-primary/20 focus:border-primary
-            placeholder:text-gray-400
+            placeholder:text-[18px] placeholder:text-gray-400
             transition-all duration-200 ease-in-out"
         />
         <div className="absolute right-3 top-0 h-full flex items-center">
@@ -71,6 +71,7 @@ export const SearchBox = ({
                 onSearch('')
               }}
               className="text-gray-400 hover:text-gray-600 p-1"
+              aria-label="清除搜索"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />

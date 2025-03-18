@@ -1,15 +1,20 @@
 import React from 'react'
 import Link from 'next/link'
 import { DrugWithPinyin } from '@/lib/types'
-import { formatBrandName } from '@/lib/utils'
+import { BrandName } from '@/components/common/BrandName'
 
 interface DrugHeaderProps {
   drug: DrugWithPinyin
 }
 
 export const DrugHeader: React.FC<DrugHeaderProps> = ({ drug }) => {
+  // 为面包屑导航创建纯文本格式的品牌名
+  const brandNameText = drug.brandName.cn.includes('®') || drug.brandName.cn.includes('™') 
+    ? drug.brandName.cn 
+    : `${drug.brandName.cn}®`;
+  
   // 统一的标题拼接规则
-  const titleText = `${formatBrandName(drug.brandName.cn)} ${drug.productName}`
+  const titleText = `${brandNameText} ${drug.productName}`
 
   return (
     <div>
@@ -24,16 +29,16 @@ export const DrugHeader: React.FC<DrugHeaderProps> = ({ drug }) => {
       
       {/* 药品标题区 */}
       <div className="mt-4">
-        {/* 中文名称行 */}
-        <div className="flex items-center gap-2">
-          <h1 className="text-xl font-bold text-gray-900">
-            {formatBrandName(drug.brandName.cn)}
+        {/* 中文名称行 - 使用flex-wrap和whitespace-nowrap确保完整字段折行 */}
+        <div className="flex flex-wrap gap-2 items-center">
+          <h1 className="text-xl font-bold text-gray-900 whitespace-nowrap">
+            <BrandName name={drug.brandName.cn} />
           </h1>
-          <span className="text-xl text-gray-600">
+          <span className="text-xl text-gray-600 whitespace-nowrap">
             {drug.productName}
           </span>
           {drug.isOriginal && (
-            <span className="inline-flex items-center gap-0.5 px-2.5 py-1 text-[15px] rounded-full bg-primary/10 text-primary">
+            <span className="inline-flex items-center gap-0.5 px-2.5 py-1 text-sm rounded-full bg-primary/10 text-primary whitespace-nowrap">
               <svg 
                 viewBox="0 0 24 24" 
                 fill="currentColor" 
@@ -46,12 +51,14 @@ export const DrugHeader: React.FC<DrugHeaderProps> = ({ drug }) => {
           )}
         </div>
 
-        {/* 英文名称行 */}
+        {/* 英文名称行 - 同样使用flex-wrap确保完整折行 */}
         {drug.brandName.en && (
-          <div className="mt-2 text-base text-gray-400">
-            {formatBrandName(drug.brandName.en)}
+          <div className="mt-2 flex flex-wrap gap-1 items-center text-base text-gray-400">
+            <span className="whitespace-nowrap">
+              <BrandName name={drug.brandName.en} />
+            </span>
             {drug.productNameEn && (
-              <span className="ml-1">
+              <span className="whitespace-nowrap">
                 {drug.productNameEn}
               </span>
             )}

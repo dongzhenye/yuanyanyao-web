@@ -1,6 +1,6 @@
 import React from 'react'
 import { DrugWithPinyin } from '@/lib/types'
-import { formatBrandName } from '@/lib/utils'
+import { BrandName } from '@/components/common/BrandName'
 
 interface DrugNamesProps {
   drug: DrugWithPinyin
@@ -37,10 +37,10 @@ export const DrugNames: React.FC<DrugNamesProps> = ({ drug }) => {
         <div>
           <div className="text-sm text-gray-500">商品名</div>
           <div className="mt-1">
-            <div>{formatBrandName(drug.brandName.cn)}</div>
+            <div><BrandName name={drug.brandName.cn} /></div>
             {drug.brandName.en && (
               <div className="text-sm text-gray-500 mt-1">
-                {formatBrandName(drug.brandName.en)}
+                <BrandName name={drug.brandName.en} />
               </div>
             )}
           </div>

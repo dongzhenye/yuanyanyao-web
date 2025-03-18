@@ -7,9 +7,10 @@ import { SearchBox } from '@/components/search/SearchBox'
 import { searchDrugs } from '@/lib/search'
 import { siteConfig } from '@/lib/config'
 import drugsData from '@/data/drugs.json'
-import type { SearchResultItem, SearchHistory } from '@/lib/types'
+import type { SearchResultItem, SearchHistoryItem } from '@/lib/types'
 import { SearchResults } from '@/components/search/SearchResults'
 import { SearchFilters } from '@/components/search/SearchFilters'
+import { SearchHistory } from '@/components/search/SearchHistory'
 import { Footer } from '@/components/layout/Footer'
 import { trackEvent } from '@/lib/analytics'
 
@@ -30,8 +31,7 @@ const HomePage: NextPage = () => {
   const [isSearching, setIsSearching] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [activeFilters, setActiveFilters] = useState<string[]>([])
-  const [searchHistory, setSearchHistory] = useState<SearchHistory[]>(() => {
-    // 从 localStorage 恢复搜索历史
+  const [searchHistory, setSearchHistory] = useState<SearchHistoryItem[]>(() => {
     try {
       const saved = localStorage.getItem('searchHistory')
       return saved ? JSON.parse(saved) : []
@@ -145,32 +145,21 @@ const HomePage: NextPage = () => {
     localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
   }, [searchHistory])
 
-  // 处理历史记录点击
-  const handleHistoryClick = useCallback(() => {
-    if (searchHistory.length > 0) {
-      const lastSearch = searchHistory[0]
-      if (!lastSearch) return
-
-      setSearchTerm(lastSearch.searchTerm)
-      setActiveFilters([...lastSearch.filters])  // 创建新数组以确保类型安全
-      handleSearch(lastSearch.searchTerm)
-    }
-  }, [searchHistory, handleSearch])
-
   // 处理关联搜索
   const handleRelatedSearch = useCallback((type: 'generic' | 'brand' | 'manufacturer', value: string) => {
-    // 保存历史记录前先检查是否重复
+    // 保存历史记录
     const currentState = {
       searchTerm,
-      filters: [...activeFilters],  // 创建新数组以确保类型安全
+      filters: [...activeFilters],
       timestamp: Date.now()
     }
     setSearchHistory(prev => {
-      // 避免重复添加相同的搜索
-      if (prev[0]?.searchTerm === searchTerm && 
-          JSON.stringify(prev[0]?.filters) === JSON.stringify(activeFilters)) {
-        return prev
-      }
+      const isDuplicate = prev[0] && 
+        prev[0].searchTerm === searchTerm && 
+        prev[0].filters.length === activeFilters.length &&
+        prev[0].filters.every((f, i) => f === activeFilters[i])
+      
+      if (isDuplicate) return prev
       return [currentState, ...prev].slice(0, 10)
     })
     
@@ -179,17 +168,12 @@ const HomePage: NextPage = () => {
     setShouldFocusInput(true) // 触发输入框聚焦
     
     // 根据类型设置筛选条件
-    switch(type) {
-      case 'generic':
-        setActiveFilters(prev => 
-          prev.filter(f => ['registrationType', 'formulation'].includes(f))
-        )
-        break
-      case 'brand':
-      case 'manufacturer':
-        setActiveFilters([])
-        break
+    const filterMap = {
+      generic: (prev: string[]) => prev.filter(f => ['registrationType', 'formulation'].includes(f)),
+      brand: () => [],
+      manufacturer: () => []
     }
+    setActiveFilters(filterMap[type])
     
     // 添加关联搜索事件跟踪
     trackEvent('related_search', {
@@ -198,7 +182,14 @@ const HomePage: NextPage = () => {
       type
     })
   }, [searchTerm, activeFilters])
-  
+
+  // 处理历史记录恢复
+  const handleHistoryRestore = useCallback((searchTerm: string, filters: string[]) => {
+    setSearchTerm(searchTerm)
+    setActiveFilters(filters)
+    handleSearch(searchTerm)
+  }, [handleSearch])
+
   return (
     <>
       <NextSeo 
@@ -224,7 +215,7 @@ const HomePage: NextPage = () => {
             </h1>
 
             {/* 优化副标题布局 */}
-            <div className="flex flex-wrap justify-center items-center gap-x-1 gap-y-2 text-base text-gray-600">
+            <div className="flex flex-wrap justify-center items-center gap-x-1 gap-y-2 text-[16px] text-gray-600">
               <div className="flex items-center">
                 <span>已收录</span>
                 <span className="mx-1 text-primary font-medium">{drugsData.meta.total}</span>
@@ -285,14 +276,10 @@ const HomePage: NextPage = () => {
                 />
               </div>
               
-              {searchHistory.length > 0 && (
-                <button
-                  onClick={handleHistoryClick}
-                  className="text-sm whitespace-nowrap text-primary hover:text-primary-dark hover:underline"
-                >
-                  返回上次搜索
-                </button>
-              )}
+              <SearchHistory
+                history={searchHistory}
+                onRestore={handleHistoryRestore}
+              />
             </div>
           )}
 

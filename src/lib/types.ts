@@ -50,6 +50,9 @@ export interface Drug {
   isOriginal: boolean // 是否原研
   originator: string  // 原研厂商
   
+  // 图片信息
+  imageUrl?: string   // 药品图片URL
+  
   lastUpdated: string // 最后更新日期
   approvalNumber?: string  // 仅国产药
   registrationNumber?: string  // 仅进口药
@@ -59,6 +62,7 @@ export interface Drug {
   }>
   originalException?: string
   approvalDate: string  // 添加这个字段
+  isOTC: boolean      // 是否OTC药品
 }
 
 // 扩展带拼音的药品类型
@@ -67,7 +71,7 @@ export interface DrugWithPinyin extends Drug {
 }
 
 // 添加搜索历史类型
-export interface SearchHistory {
+export interface SearchHistoryItem {
   searchTerm: string
   filters: string[]
   timestamp: number
@@ -86,4 +90,10 @@ export interface SearchResultItem extends DrugWithPinyin {
     sameBrand: number
     sameManufacturer: number
   }
+}
+
+export interface RenderOptions {
+  width: number;
+  height: number;
+  devicePixelRatio?: number;
 } 

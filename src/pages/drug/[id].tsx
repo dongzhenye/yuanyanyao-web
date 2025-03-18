@@ -11,8 +11,8 @@ import { BasicInfo } from '@/components/drug/BasicInfo'
 import { DrugNames } from '@/components/drug/DrugNames'
 import { DrugSpecs } from '@/components/drug/DrugSpecs'
 import { OriginalInfo } from '@/components/drug/OriginalInfo'
+import { DrugImage } from '@/components/drug/DrugImage'
 import { trackEvent } from '@/lib/analytics'
-import { formatBrandName } from '@/lib/utils'
 import { useEffect } from 'react'
 
 interface DrugPageProps {
@@ -31,11 +31,16 @@ const DrugPage: NextPage<DrugPageProps> = ({ drug, relatedDrugs }) => {
     })
   }, [drug.id, drug.productName])
 
+  // 创建用于SEO的纯文本格式品牌名
+  const brandNameText = drug.brandName.cn.includes('®') || drug.brandName.cn.includes('™') 
+    ? drug.brandName.cn 
+    : `${drug.brandName.cn}®`;
+
   return (
     <>
       <NextSeo
-        title={`${formatBrandName(drug.brandName.cn)} ${drug.productName}`}
-        description={`${formatBrandName(drug.brandName.cn)} ${drug.productName}的详细信息。由${drug.manufacturerName}生产，包含规格、适应症等权威数据。`}
+        title={`${brandNameText} ${drug.productName}`}
+        description={`${brandNameText} ${drug.productName}的详细信息。由${drug.manufacturerName}生产，包含规格、适应症等权威数据。`}
       />
       
       <div className="min-h-screen bg-gray-50">
@@ -85,6 +90,7 @@ const DrugPage: NextPage<DrugPageProps> = ({ drug, relatedDrugs }) => {
             
             {/* 侧边栏 */}
             <div className="lg:col-span-4 space-y-6">
+              <DrugImage drug={drug} />
               <OriginalInfo drug={drug} />
               <RelatedDrugs 
                 sameGeneric={relatedDrugs.sameGeneric}
