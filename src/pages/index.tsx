@@ -7,9 +7,11 @@ import { SearchBox } from '@/components/search/SearchBox'
 import { searchDrugs } from '@/lib/search'
 import { siteConfig } from '@/lib/config'
 import drugsData from '@/data/drugs.json'
-import type { SearchResultItem, SearchHistory } from '@/lib/types'
+import type { SearchResultItem } from '@/lib/types'
 import { SearchResults } from '@/components/search/SearchResults'
 import { SearchFilters } from '@/components/search/SearchFilters'
+import { SearchHistory } from '@/components/search/SearchHistory'
+import { useSearchHistory } from '@/hooks/useSearchHistory'
 import { Footer } from '@/components/layout/Footer'
 import { trackEvent } from '@/lib/analytics'
 
@@ -30,15 +32,7 @@ const HomePage: NextPage = () => {
   const [isSearching, setIsSearching] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
   const [activeFilters, setActiveFilters] = useState<string[]>([])
-  const [searchHistory, setSearchHistory] = useState<SearchHistory[]>(() => {
-    // 从 localStorage 恢复搜索历史
-    try {
-      const saved = localStorage.getItem('searchHistory')
-      return saved ? JSON.parse(saved) : []
-    } catch {
-      return []
-    }
-  })
+  const { searchHistory, addToHistory } = useSearchHistory()
   const [shouldFocusInput, setShouldFocusInput] = useState(false)
 
   const handleSearch = useCallback((query: string) => {
@@ -140,39 +134,10 @@ const HomePage: NextPage = () => {
     }
   }, [activeFilters, handleSearch, searchTerm])
 
-  // 保存搜索历史到 localStorage
-  useEffect(() => {
-    localStorage.setItem('searchHistory', JSON.stringify(searchHistory))
-  }, [searchHistory])
-
-  // 处理历史记录点击
-  const handleHistoryClick = useCallback(() => {
-    if (searchHistory.length > 0) {
-      const lastSearch = searchHistory[0]
-      if (!lastSearch) return
-
-      setSearchTerm(lastSearch.searchTerm)
-      setActiveFilters([...lastSearch.filters])  // 创建新数组以确保类型安全
-      handleSearch(lastSearch.searchTerm)
-    }
-  }, [searchHistory, handleSearch])
-
   // 处理关联搜索
   const handleRelatedSearch = useCallback((type: 'generic' | 'brand' | 'manufacturer', value: string) => {
-    // 保存历史记录前先检查是否重复
-    const currentState = {
-      searchTerm,
-      filters: [...activeFilters],  // 创建新数组以确保类型安全
-      timestamp: Date.now()
-    }
-    setSearchHistory(prev => {
-      // 避免重复添加相同的搜索
-      if (prev[0]?.searchTerm === searchTerm && 
-          JSON.stringify(prev[0]?.filters) === JSON.stringify(activeFilters)) {
-        return prev
-      }
-      return [currentState, ...prev].slice(0, 10)
-    })
+    // 保存历史记录
+    addToHistory(searchTerm, activeFilters)
     
     // 更新搜索词和筛选条件
     setSearchTerm(value)
@@ -197,8 +162,15 @@ const HomePage: NextPage = () => {
       to: value,
       type
     })
-  }, [searchTerm, activeFilters])
-  
+  }, [searchTerm, activeFilters, addToHistory])
+
+  // 处理历史记录恢复
+  const handleHistoryRestore = useCallback((searchTerm: string, filters: string[]) => {
+    setSearchTerm(searchTerm)
+    setActiveFilters(filters)
+    handleSearch(searchTerm)
+  }, [handleSearch])
+
   return (
     <>
       <NextSeo 
@@ -285,14 +257,10 @@ const HomePage: NextPage = () => {
                 />
               </div>
               
-              {searchHistory.length > 0 && (
-                <button
-                  onClick={handleHistoryClick}
-                  className="text-[14px] whitespace-nowrap text-primary hover:text-primary-dark hover:underline"
-                >
-                  返回上次搜索
-                </button>
-              )}
+              <SearchHistory
+                history={searchHistory}
+                onRestore={handleHistoryRestore}
+              />
             </div>
           )}
 

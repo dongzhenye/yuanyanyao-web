@@ -71,7 +71,7 @@ export interface DrugWithPinyin extends Drug {
 }
 
 // 添加搜索历史类型
-export interface SearchHistory {
+export interface SearchHistoryItem {
   searchTerm: string
   filters: string[]
   timestamp: number

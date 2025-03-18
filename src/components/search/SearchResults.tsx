@@ -28,7 +28,7 @@ export const SearchResults = ({
     return (
       <div className="text-center py-8">
         <div className="inline-block animate-spin rounded-full h-8 w-8 border-4 border-primary border-r-transparent" />
-        <p className="mt-2 text-gray-500">搜索中...</p>
+        <p className="mt-2 text-[14px] text-gray-500">搜索中...</p>
       </div>
     )
   }
@@ -40,8 +40,8 @@ export const SearchResults = ({
   if (results.length === 0) {
     return (
       <div className="text-center py-8">
-        <p className="text-gray-500">未找到相关药品</p>
-        <p className="mt-2 text-sm text-gray-400">
+        <p className="text-[14px] text-gray-500">未找到相关药品</p>
+        <p className="mt-2 text-[14px] text-gray-400">
           建议：
           <ul className="mt-1 space-y-1">
             <li>• 检查输入是否正确</li>
@@ -54,7 +54,7 @@ export const SearchResults = ({
             href="https://github.com/dongzhenye/yuanyanyao/issues"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm text-primary hover:text-primary/80 border border-primary/20 rounded-full hover:bg-primary/5 transition-colors"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 text-[14px] text-primary hover:text-primary/80 border border-primary/20 rounded-full hover:bg-primary/5 transition-colors"
           >
             <svg 
               viewBox="0 0 24 24" 
@@ -98,9 +98,23 @@ export const SearchResults = ({
                     title={`搜索${drug.brandName.cn || drug.brandName.en || ''}相关药品`}
                   >
                     {drug.brandName.cn ? (
-                      <BrandName name={drug.brandName.cn} />
+                      <BrandName 
+                        name={
+                          <HighlightText 
+                            text={drug.brandName.cn}
+                            matches={getMatches(drug.matches, 'brandName.cn')}
+                          />
+                        }
+                      />
                     ) : drug.brandName.en ? (
-                      <BrandName name={drug.brandName.en} />
+                      <BrandName 
+                        name={
+                          <HighlightText 
+                            text={drug.brandName.en}
+                            matches={getMatches(drug.matches, 'brandName.en')}
+                          />
+                        }
+                      />
                     ) : null}
                   </button>
                   
@@ -122,7 +136,14 @@ export const SearchResults = ({
                 {/* 英文商品名 - 移动端隐藏，PC端显示 */}
                 {drug.brandName.cn && drug.brandName.en && (
                   <div className="hidden md:block mt-0 text-[10px] text-gray-400">
-                    <BrandName name={drug.brandName.en} />
+                    <BrandName 
+                      name={
+                        <HighlightText 
+                          text={drug.brandName.en}
+                          matches={getMatches(drug.matches, 'brandName.en')}
+                        />
+                      }
+                    />
                   </div>
                 )}
                 
