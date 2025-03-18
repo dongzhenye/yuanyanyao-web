@@ -51,19 +51,17 @@ export const DrugHeader: React.FC<DrugHeaderProps> = ({ drug }) => {
           )}
         </div>
 
-        {/* 英文名称行 - 更好地处理超长文本 */}
+        {/* 英文名称行 - 同样使用flex-wrap确保完整折行 */}
         {drug.brandName.en && (
-          <div className="mt-2 flex flex-wrap text-base text-gray-400 w-full">
-            <div className="w-full flex flex-wrap gap-1 items-center">
-              <span className="whitespace-nowrap inline-block">
-                <BrandName name={drug.brandName.en} />
+          <div className="mt-2 flex flex-wrap gap-1 items-center text-base text-gray-400">
+            <span className="whitespace-nowrap">
+              <BrandName name={drug.brandName.en} />
+            </span>
+            {drug.productNameEn && (
+              <span className="whitespace-nowrap">
+                {drug.productNameEn}
               </span>
-              {drug.productNameEn && (
-                <span className="break-all md:break-normal inline-block">
-                  {drug.productNameEn}
-                </span>
-              )}
-            </div>
+            )}
           </div>
         )}
       </div>

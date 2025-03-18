@@ -31,6 +31,17 @@ export const BasicInfo: React.FC<BasicInfoProps> = ({ drug }) => {
             </div>
           </div>
 
+          {/* 药品类型 */}
+          <div>
+            <div className="text-sm text-gray-500">药品类型</div>
+            <div className="mt-1">
+              <SearchTag 
+                text={drug.isOTC ? 'OTC药品' : '处方药'}
+                type={drug.isOTC ? 'success' : 'warning'}
+              />
+            </div>
+          </div>
+
           {/* 剂型 */}
           <div>
             <div className="text-sm text-gray-500">剂型</div>

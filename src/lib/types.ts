@@ -62,6 +62,7 @@ export interface Drug {
   }>
   originalException?: string
   approvalDate: string  // 添加这个字段
+  isOTC: boolean      // 是否OTC药品
 }
 
 // 扩展带拼音的药品类型
@@ -89,4 +90,10 @@ export interface SearchResultItem extends DrugWithPinyin {
     sameBrand: number
     sameManufacturer: number
   }
+}
+
+export interface RenderOptions {
+  width: number;
+  height: number;
+  devicePixelRatio?: number;
 } 

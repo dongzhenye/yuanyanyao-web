@@ -4,6 +4,7 @@ import type { SearchResultItem } from '@/lib/types'
 import { HighlightText } from './HighlightText'
 import type { FuseResultMatch } from 'fuse.js'
 import { BrandName } from '@/components/common/BrandName'
+import { DrugImageThumbnail } from './DrugImageThumbnail'
 
 interface SearchResultsProps {
   results: SearchResultItem[]
@@ -15,17 +16,6 @@ interface SearchResultsProps {
 const getMatches = (matches: SearchResultItem['matches'], key: string): ReadonlyArray<FuseResultMatch> => {
   const match = matches?.find(m => m.key === key)
   return match ? [{ indices: match.indices || [], key: match.key }] : []
-}
-
-// 生成药品图片的URL
-const getDrugImageUrl = (drug: SearchResultItem): string => {
-  // 如果药品有图片URL，优先使用
-  if (drug.imageUrl) {
-    return drug.imageUrl;
-  }
-  
-  // 否则使用占位图片
-  return `https://via.placeholder.com/400x400?text=${encodeURIComponent(drug.brandName.cn || drug.brandName.en || drug.genericName)}`
 }
 
 export const SearchResults = ({ 
@@ -91,14 +81,8 @@ export const SearchResults = ({
           className="block bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow"
         >
           <div className="flex items-center p-3">
-            {/* 左侧药品图片 - 宽度为1/4到1/3之间，适应移动端 */}
-            <div className="w-20 h-20 sm:w-24 sm:h-24 flex-shrink-0 bg-gray-100 rounded-md overflow-hidden">
-              <img 
-                src={getDrugImageUrl(drug)} 
-                alt={`${drug.brandName.cn || drug.brandName.en || drug.genericName}图片`}
-                className="object-contain w-full h-full p-1"
-              />
-            </div>
+            {/* 左侧药品图片 */}
+            <DrugImageThumbnail drug={drug} />
 
             {/* 右侧信息区域 */}
             <div className="flex-1 ml-4">

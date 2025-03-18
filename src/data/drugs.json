@@ -33,7 +33,8 @@
         }
       ],
       "approvalDate": "2014-05-20",
-      "lastUpdated": "2024-03-15"
+      "lastUpdated": "2024-03-15",
+      "isOTC": false
     },
     {
       "id": "2",
@@ -63,7 +64,8 @@
         }
       ],
       "approvalDate": "2020-12-15",
-      "lastUpdated": "2024-03-15"
+      "lastUpdated": "2024-03-15",
+      "isOTC": false
     },
     {
       "id": "3",
@@ -86,7 +88,8 @@
       "originator": "Pfizer Inc.",
       "originalException": "原研专利到期仿制",
       "approvalDate": "2022-08-30",
-      "lastUpdated": "2024-03-15"
+      "lastUpdated": "2024-03-15",
+      "isOTC": false
     },
     {
       "id": "4",
@@ -117,7 +120,8 @@
         }
       ],
       "approvalDate": "2022-02-11",
-      "lastUpdated": "2024-03-15"
+      "lastUpdated": "2024-03-15",
+      "isOTC": false
     },
     {
       "id": "5",
@@ -148,7 +152,8 @@
         }
       ],
       "approvalDate": "2013-05-20",
-      "lastUpdated": "2024-03-15"
+      "lastUpdated": "2024-03-15",
+      "isOTC": true
     },
     {
       "id": "6",
@@ -182,7 +187,8 @@
         }
       ],
       "approvalDate": "2020-05-20",
-      "lastUpdated": "2024-03-15"
+      "lastUpdated": "2024-03-15",
+      "isOTC": false
     },
     {
       "id": "7",
@@ -212,7 +218,8 @@
       ],
       "originalException": "中药创新药",
       "approvalDate": "2022-08-30",
-      "lastUpdated": "2024-03-15"
+      "lastUpdated": "2024-03-15",
+      "isOTC": true
     },
     {
       "id": "8",
@@ -239,7 +246,8 @@
         }
       ],
       "approvalDate": "2002-06-15",
-      "lastUpdated": "2024-03-15"
+      "lastUpdated": "2024-03-15",
+      "isOTC": true
     },
     {
       "id": "9",
@@ -261,7 +269,8 @@
       "isOriginal": false,
       "originator": "GlaxoSmithKline plc",
       "approvalDate": "2020-03-20",
-      "lastUpdated": "2024-03-15"
+      "lastUpdated": "2024-03-15",
+      "isOTC": true
     },
     {
       "id": "10",
@@ -289,11 +298,81 @@
         }
       ],
       "approvalDate": "2018-09-12",
-      "lastUpdated": "2024-03-15"
+      "lastUpdated": "2024-03-15",
+      "isOTC": false
+    },
+    {
+      "id": "11",
+      "registrationType": "境内生产药品",
+      "identifier": "国药准字H20160001",
+      "inn": "Acetylsalicylic acid",
+      "genericName": "阿司匹林",
+      "productName": "阿司匹林肠溶片",
+      "productNameEn": "Aspirin Enteric-coated Tablets",
+      "brandName": {
+        "cn": "拜阿司匹灵",
+        "en": "Aspirin"
+      },
+      "category": "化学药品",
+      "formulation": "肠溶片",
+      "specification": "100mg*30片",
+      "mahName": "拜耳医药保健有限公司",
+      "manufacturerName": "拜耳医药保健有限公司",
+      "isOriginal": true,
+      "originator": "Bayer AG",
+      "approvalDate": "2016-01-01",
+      "lastUpdated": "2024-03-15",
+      "isOTC": true
+    },
+    {
+      "id": "12",
+      "registrationType": "境内生产药品",
+      "identifier": "国药准字H20160002",
+      "inn": "Ibuprofen",
+      "genericName": "布洛芬",
+      "productName": "布洛芬缓释胶囊",
+      "productNameEn": "Ibuprofen Sustained-release Capsules",
+      "brandName": {
+        "cn": "美林",
+        "en": "Motrin"
+      },
+      "category": "化学药品",
+      "formulation": "胶囊",
+      "specification": "200mg*20粒",
+      "mahName": "强生制药有限公司",
+      "manufacturerName": "强生制药有限公司",
+      "isOriginal": true,
+      "originator": "Johnson & Johnson",
+      "approvalDate": "2016-02-01",
+      "lastUpdated": "2024-03-15",
+      "isOTC": true
+    },
+    {
+      "id": "13",
+      "registrationType": "境内生产药品",
+      "identifier": "国药准字H20160003",
+      "inn": "Ceftriaxone",
+      "genericName": "头孢曲松钠",
+      "productName": "注射用头孢曲松钠",
+      "productNameEn": "Ceftriaxone Sodium for Injection",
+      "brandName": {
+        "cn": "罗氏芬",
+        "en": "Rocephin"
+      },
+      "category": "化学药品",
+      "formulation": "注射剂",
+      "specification": "1.0g*10支",
+      "mahName": "罗氏制药有限公司",
+      "manufacturerName": "罗氏制药有限公司",
+      "isOriginal": true,
+      "originator": "Roche",
+      "approvalDate": "2016-03-01",
+      "lastUpdated": "2024-03-15",
+      "isOTC": false
     }
   ],
   "meta": {
-    "total": 10,
+    "total": 13,
     "lastUpdate": "2024-03-15"
   }
 } 
