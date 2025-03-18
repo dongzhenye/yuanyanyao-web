@@ -1,3 +1,4 @@
+import React from 'react'
 import Link from 'next/link'
 
 const Logo = () => (
@@ -29,13 +30,13 @@ export const Header = () => {
             className="flex items-center gap-2 hover:opacity-80 transition-opacity"
           >
             <Logo />
-            <span className="text-xl font-bold">原研药查询</span>
+            <span className="text-xl font-bold text-gray-900">原研药查询</span>
           </Link>
 
           <div className="flex items-center gap-4">
             <Link
               href="/about"
-              className="text-gray-600 hover:text-gray-900 text-sm transition-colors"
+              className="text-[14px] text-gray-600 hover:text-gray-900 transition-colors"
             >
               关于我们
             </Link>
@@ -47,7 +48,7 @@ export const Header = () => {
               className="inline-flex items-center px-3 py-1.5 
                 bg-primary/10 text-primary rounded-full 
                 hover:bg-primary/20 transition-colors
-                text-sm font-medium"
+                text-[14px] font-medium"
             >
               <svg 
                 className="w-4 h-4 mr-1" 
