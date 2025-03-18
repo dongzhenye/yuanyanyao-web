@@ -10,7 +10,7 @@ export const DrugImage: React.FC<DrugImageProps> = ({ drug }) => {
   return (
     <div className="bg-white rounded-lg shadow p-6">
       <h2 className="text-lg font-medium text-gray-900 mb-4">药品图片</h2>
-      <div className="aspect-square w-full relative bg-gray-100 rounded-md overflow-hidden">
+      <div className="aspect-square w-full relative bg-white rounded-md overflow-hidden">
         <div className="absolute inset-0 flex items-center justify-center p-4">
           <BaseDrugImage 
             drug={drug}
