@@ -13,7 +13,7 @@ export const OriginalInfo: React.FC<OriginalInfoProps> = ({ drug }) => {
       <div className="space-y-4">
         {/* 原研状态 */}
         <div className="flex items-center gap-2">
-          <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-sm font-medium ${
+          <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
             drug.isOriginal 
               ? 'bg-primary/10 text-primary' 
               : 'bg-gray-100 text-gray-600'
@@ -39,7 +39,7 @@ export const OriginalInfo: React.FC<OriginalInfoProps> = ({ drug }) => {
                   href={source.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+                  className="inline-flex items-center px-3 py-1 rounded-full text-xs bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
                 >
                   {source.type}
                 </a>
