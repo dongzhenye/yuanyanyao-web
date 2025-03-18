@@ -94,7 +94,7 @@ export const SearchResults = ({
                       e.preventDefault()
                       onRelatedSearch('brand', drug.brandName.cn || drug.brandName.en || '')
                     }}
-                    className="text-base font-bold text-gray-900 hover:text-primary break-words"
+                    className="text-base font-bold text-gray-900 hover:text-primary break-words text-[18px]"
                     title={`搜索${drug.brandName.cn || drug.brandName.en || ''}相关药品`}
                   >
                     {drug.brandName.cn ? (
@@ -106,7 +106,7 @@ export const SearchResults = ({
                   
                   {/* 原研药标签 */}
                   {drug.isOriginal && (
-                    <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 text-xs rounded-full bg-primary/10 text-primary whitespace-nowrap">
+                    <span className="inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[14px] rounded-full bg-primary/10 text-primary whitespace-nowrap">
                       <svg 
                         viewBox="0 0 24 24" 
                         fill="currentColor" 
@@ -133,7 +133,7 @@ export const SearchResults = ({
                       e.preventDefault()
                       onRelatedSearch('generic', drug.productName || drug.productNameEn || '')
                     }}
-                    className="text-base font-normal text-gray-700 hover:text-primary break-words"
+                    className="text-base font-normal text-gray-900 hover:text-primary break-words text-[18px]"
                     title={`搜索${drug.productName || drug.productNameEn || ''}相关药品`}
                   >
                     {drug.productName ? (
@@ -152,7 +152,7 @@ export const SearchResults = ({
               </div>
               
               {/* 厂商名称 */}
-              <div className="mt-1 text-xs text-gray-700 truncate">
+              <div className="mt-1 text-[14px] text-gray-600 truncate">
                 <button
                   onClick={(e) => {
                     e.preventDefault()

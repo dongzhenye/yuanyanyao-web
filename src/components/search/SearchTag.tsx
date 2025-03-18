@@ -8,7 +8,7 @@ interface SearchTagProps {
 }
 
 export const SearchTag = ({ text, type, onClick, active }: SearchTagProps) => {
-  const baseClasses = "px-2 py-1 text-xs rounded-full transition-all duration-200"
+  const baseClasses = "px-2 py-1 text-[14px] rounded-full transition-all duration-200"
   
   // 区分筛选器标签和普通标签
   const typeClasses = onClick 
@@ -33,7 +33,6 @@ export const SearchTag = ({ text, type, onClick, active }: SearchTagProps) => {
     <span 
       onClick={onClick}
       className={`${baseClasses} ${typeClasses} ${clickableClasses} ${activeClasses}`}
-      role={onClick ? "button" : undefined}
       tabIndex={onClick ? 0 : undefined}
     >
       {text}

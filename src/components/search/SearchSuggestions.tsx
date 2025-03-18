@@ -57,7 +57,7 @@ export const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({ onSelect }
   
   return (
     <div className="mt-3" ref={containerRef}>
-      <div className="text-sm text-gray-500 mb-2">热门搜索：</div>
+      <div className="text-[14px] text-gray-500 mb-2">热门搜索：</div>
       <div className="flex flex-wrap gap-2" ref={termsContainerRef}>
         {/* 优先显示的标签 */}
         <div ref={priorityTermsRef} className="flex flex-wrap gap-2">
@@ -65,7 +65,7 @@ export const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({ onSelect }
             <button
               key={term}
               onClick={() => onSelect(term)}
-              className="px-2 py-1 text-sm bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors"
+              className="px-2 py-1 text-[14px] bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors"
             >
               {term}
             </button>
@@ -78,7 +78,7 @@ export const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({ onSelect }
             <button
               key={term}
               onClick={() => onSelect(term)}
-              className="px-2 py-1 text-sm bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors"
+              className="px-2 py-1 text-[14px] bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors"
             >
               {term}
             </button>
@@ -88,7 +88,7 @@ export const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({ onSelect }
         {/* 展开/收起按钮 - 仅在移动端显示 */}
         {shouldCollapse && (
           <button 
-            className="px-2 py-1 text-sm bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors"
+            className="px-2 py-1 text-[14px] bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors"
             onClick={() => setShowAllTerms(prev => !prev)}
           >
             {showAllTerms ? '收起' : '更多...'}

@@ -224,7 +224,7 @@ const HomePage: NextPage = () => {
             </h1>
 
             {/* 优化副标题布局 */}
-            <div className="flex flex-wrap justify-center items-center gap-x-1 gap-y-2 text-base text-gray-600">
+            <div className="flex flex-wrap justify-center items-center gap-x-1 gap-y-2 text-[16px] text-gray-600">
               <div className="flex items-center">
                 <span>已收录</span>
                 <span className="mx-1 text-primary font-medium">{drugsData.meta.total}</span>
@@ -288,7 +288,7 @@ const HomePage: NextPage = () => {
               {searchHistory.length > 0 && (
                 <button
                   onClick={handleHistoryClick}
-                  className="text-sm whitespace-nowrap text-primary hover:text-primary-dark hover:underline"
+                  className="text-[14px] whitespace-nowrap text-primary hover:text-primary-dark hover:underline"
                 >
                   返回上次搜索
                 </button>
