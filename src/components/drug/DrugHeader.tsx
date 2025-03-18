@@ -29,16 +29,16 @@ export const DrugHeader: React.FC<DrugHeaderProps> = ({ drug }) => {
       
       {/* 药品标题区 */}
       <div className="mt-4">
-        {/* 中文名称行 */}
-        <div className="flex items-center gap-2">
-          <h1 className="text-xl font-bold text-gray-900">
+        {/* 中文名称行 - 使用flex-wrap和whitespace-nowrap确保完整字段折行 */}
+        <div className="flex flex-wrap gap-2 items-center">
+          <h1 className="text-xl font-bold text-gray-900 whitespace-nowrap">
             <BrandName name={drug.brandName.cn} />
           </h1>
-          <span className="text-xl text-gray-600">
+          <span className="text-xl text-gray-600 whitespace-nowrap">
             {drug.productName}
           </span>
           {drug.isOriginal && (
-            <span className="inline-flex items-center gap-0.5 px-2.5 py-1 text-[15px] rounded-full bg-primary/10 text-primary">
+            <span className="inline-flex items-center gap-0.5 px-2.5 py-1 text-[15px] rounded-full bg-primary/10 text-primary whitespace-nowrap">
               <svg 
                 viewBox="0 0 24 24" 
                 fill="currentColor" 
@@ -51,15 +51,19 @@ export const DrugHeader: React.FC<DrugHeaderProps> = ({ drug }) => {
           )}
         </div>
 
-        {/* 英文名称行 */}
+        {/* 英文名称行 - 更好地处理超长文本 */}
         {drug.brandName.en && (
-          <div className="mt-2 text-base text-gray-400">
-            <BrandName name={drug.brandName.en} />
-            {drug.productNameEn && (
-              <span className="ml-1">
-                {drug.productNameEn}
+          <div className="mt-2 flex flex-wrap text-base text-gray-400 w-full">
+            <div className="w-full flex flex-wrap gap-1 items-center">
+              <span className="whitespace-nowrap inline-block">
+                <BrandName name={drug.brandName.en} />
               </span>
-            )}
+              {drug.productNameEn && (
+                <span className="break-all md:break-normal inline-block">
+                  {drug.productNameEn}
+                </span>
+              )}
+            </div>
           </div>
         )}
       </div>
