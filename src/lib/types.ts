@@ -50,6 +50,9 @@ export interface Drug {
   isOriginal: boolean // 是否原研
   originator: string  // 原研厂商
   
+  // 图片信息
+  imageUrl?: string   // 药品图片URL
+  
   lastUpdated: string // 最后更新日期
   approvalNumber?: string  // 仅国产药
   registrationNumber?: string  // 仅进口药
