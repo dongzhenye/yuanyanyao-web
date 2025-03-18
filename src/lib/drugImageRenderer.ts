@@ -209,8 +209,8 @@ export const renderDrugImage = async (
       watermarkX,
       watermarkY,
       watermarkSize,
-      '#000000',
-      0.15
+      iconColor,
+      0.1
     );
   }
 
