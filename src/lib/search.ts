@@ -17,9 +17,9 @@ const drugsWithPinyin = drugsData.drugs.map(drug => ({
       full: pinyin(drug.brandName.cn, { toneType: 'none' }).replace(/\s/g, ''),
       short: pinyin(drug.brandName.cn, { pattern: 'first', toneType: 'none' })
     },
-    manufacturer: {
-      full: pinyin(drug.manufacturerName, { toneType: 'none' }).replace(/\s/g, ''),
-      short: pinyin(drug.manufacturerName, { pattern: 'first', toneType: 'none' })
+    mah: {
+      full: pinyin(drug.mahName, { toneType: 'none' }).replace(/\s/g, ''),
+      short: pinyin(drug.mahName, { pattern: 'first', toneType: 'none' })
     }
   }
 })) as DrugWithPinyin[]
@@ -30,15 +30,15 @@ const fuseOptions = {
     { name: 'genericName', weight: 4 },     // 通用名
     { name: 'brandName.cn', weight: 4 },    // 中文商品名
     { name: 'brandName.en', weight: 3.5 },  // 英文商品名
-    { name: 'manufacturerName', weight: 3 }, // 厂商名
+    { name: 'mahName', weight: 3 },         // 上市许可持有人
     
     // 拼音搜索（中等权重）
     { name: 'searchPinyin.genericName.full', weight: 2.5 },
     { name: 'searchPinyin.genericName.short', weight: 2.5 },
     { name: 'searchPinyin.brandName.full', weight: 2.5 },
     { name: 'searchPinyin.brandName.short', weight: 2.5 },
-    { name: 'searchPinyin.manufacturer.full', weight: 2.5 },
-    { name: 'searchPinyin.manufacturer.short', weight: 2.5 },
+    { name: 'searchPinyin.mah.full', weight: 2.5 },
+    { name: 'searchPinyin.mah.short', weight: 2.5 },
     
     // 次要搜索字段（较低权重）
     { name: 'productName', weight: 2 },

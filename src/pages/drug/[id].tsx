@@ -19,7 +19,7 @@ interface DrugPageProps {
   drug: DrugWithPinyin
   relatedDrugs: {
     sameGeneric: DrugWithPinyin[]
-    sameManufacturer: DrugWithPinyin[]
+    sameMah: DrugWithPinyin[]
   }
 }
 
@@ -40,7 +40,7 @@ const DrugPage: NextPage<DrugPageProps> = ({ drug, relatedDrugs }) => {
     <>
       <NextSeo
         title={`${brandNameText} ${drug.productName}`}
-        description={`${brandNameText} ${drug.productName}的详细信息。由${drug.manufacturerName}生产，包含规格、适应症等权威数据。`}
+        description={`${brandNameText} ${drug.productName}的详细信息。由${drug.mahName}生产，包含规格、适应症等权威数据。`}
       />
       
       <div className="min-h-screen bg-gray-50">
@@ -94,7 +94,7 @@ const DrugPage: NextPage<DrugPageProps> = ({ drug, relatedDrugs }) => {
               <OriginalInfo drug={drug} />
               <RelatedDrugs 
                 sameGeneric={relatedDrugs.sameGeneric}
-                sameManufacturer={relatedDrugs.sameManufacturer}
+                sameMah={relatedDrugs.sameMah}
               />
             </div>
           </div>
@@ -124,8 +124,8 @@ export const getStaticProps = async ({ params }: { params: { id: string } }) => 
     sameGeneric: drugsData.drugs
       .filter(d => d.genericName === drug.genericName && d.id !== drug.id)
       .slice(0, 5),
-    sameManufacturer: drugsData.drugs
-      .filter(d => d.manufacturerName === drug.manufacturerName && d.id !== drug.id)
+    sameMah: drugsData.drugs
+      .filter(d => d.mahName === drug.mahName && d.id !== drug.id)
       .slice(0, 5)
   }
   

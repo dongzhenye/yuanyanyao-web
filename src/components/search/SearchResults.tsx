@@ -10,7 +10,7 @@ interface SearchResultsProps {
   results: SearchResultItem[]
   isLoading?: boolean
   searchTerm?: string
-  onRelatedSearch: (type: 'generic' | 'brand' | 'manufacturer', value: string) => void
+  onRelatedSearch: (type: 'generic' | 'brand' | 'mah', value: string) => void
 }
 
 const getMatches = (matches: SearchResultItem['matches'], key: string): ReadonlyArray<FuseResultMatch> => {
@@ -177,14 +177,14 @@ export const SearchResults = ({
                 <button
                   onClick={(e) => {
                     e.preventDefault()
-                    onRelatedSearch('manufacturer', drug.manufacturerName)
+                    onRelatedSearch('mah', drug.mahName)
                   }}
                   className="hover:text-primary"
-                  title={`搜索${drug.manufacturerName}相关药品`}
+                  title={`搜索${drug.mahName}相关药品`}
                 >
                   <HighlightText 
-                    text={drug.manufacturerName}
-                    matches={getMatches(drug.matches, 'manufacturerName')}
+                    text={drug.mahName}
+                    matches={getMatches(drug.matches, 'mahName')}
                   />
                 </button>
               </div>

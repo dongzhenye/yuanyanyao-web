@@ -146,7 +146,7 @@ const HomePage: NextPage = () => {
   }, [searchHistory])
 
   // 处理关联搜索
-  const handleRelatedSearch = useCallback((type: 'generic' | 'brand' | 'manufacturer', value: string) => {
+  const handleRelatedSearch = useCallback((type: 'generic' | 'brand' | 'mah', value: string) => {
     // 保存历史记录
     const currentState = {
       searchTerm,
@@ -171,7 +171,7 @@ const HomePage: NextPage = () => {
     const filterMap = {
       generic: (prev: string[]) => prev.filter(f => ['registrationType', 'formulation'].includes(f)),
       brand: () => [],
-      manufacturer: () => []
+      mah: () => []
     }
     setActiveFilters(filterMap[type])
     

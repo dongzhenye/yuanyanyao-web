@@ -5,12 +5,12 @@ import { BrandName } from '@/components/common/BrandName'
 
 interface RelatedDrugsProps {
   sameGeneric: DrugWithPinyin[]
-  sameManufacturer: DrugWithPinyin[]
+  sameMah: DrugWithPinyin[]
 }
 
 export const RelatedDrugs: React.FC<RelatedDrugsProps> = ({ 
   sameGeneric, 
-  sameManufacturer 
+  sameMah 
 }) => {
   return (
     <div className="space-y-6">
@@ -29,7 +29,7 @@ export const RelatedDrugs: React.FC<RelatedDrugsProps> = ({
                   <BrandName name={drug.brandName.cn} />
                 </div>
                 <div className="mt-1 text-sm text-gray-500">
-                  {drug.manufacturerName}
+                  {drug.mahName}
                 </div>
               </Link>
             ))}
@@ -37,12 +37,12 @@ export const RelatedDrugs: React.FC<RelatedDrugsProps> = ({
         </div>
       )}
 
-      {/* 同厂商药品 */}
-      {sameManufacturer.length > 0 && (
+      {/* 同上市许可持有人药品 */}
+      {sameMah.length > 0 && (
         <div className="bg-white rounded-lg shadow p-6">
-          <h2 className="text-lg font-medium text-gray-900 mb-4">同厂商药品</h2>
+          <h2 className="text-lg font-medium text-gray-900 mb-4">同上市许可持有人药品</h2>
           <div className="space-y-4">
-            {sameManufacturer.map(drug => (
+            {sameMah.map(drug => (
               <Link
                 key={drug.id}
                 href={`/drug/${drug.id}`}

@@ -15,7 +15,7 @@ interface EventParams {
   related_search: {
     from: string
     to: string
-    type: 'generic' | 'brand' | 'manufacturer'
+    type: 'generic' | 'brand' | 'mah'
   }
   view_drug: {
     drug_id: string

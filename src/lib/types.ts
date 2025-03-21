@@ -10,7 +10,7 @@ interface PinyinSearch {
     full: string
     short: string
   }
-  manufacturer: {
+  mah: {
     full: string
     short: string
   }
@@ -88,7 +88,7 @@ export interface SearchResultItem extends DrugWithPinyin {
   relatedCounts?: {
     sameGeneric: number
     sameBrand: number
-    sameManufacturer: number
+    sameMah: number
   }
 }
 
@@ -96,4 +96,7 @@ export interface RenderOptions {
   width: number;
   height: number;
   devicePixelRatio?: number;
-} 
+}
+
+// 定义搜索类型
+export type SearchType = 'generic' | 'brand' | 'mah' 
