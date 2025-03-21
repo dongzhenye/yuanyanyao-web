@@ -259,26 +259,39 @@
     },
     {
       "id": "9",
-      "registrationType": "境外生产药品",
-      "identifier": "国药准字H20200024",
-      "inn": "Ibuprofen",
-      "genericName": "布洛芬",
-      "productName": "布洛芬混悬液",
-      "productNameEn": "Ibuprofen Suspension",
+      "registrationType": "境内生产药品",
+      "identifier": "国药准字H10970410",
+      "approvalNumber": "国药准字H10970410",
+      "inn": "Loratadine",
+      "genericName": "氯雷他定",
+      "productName": "氯雷他定片",
+      "productNameEn": "Loratadine Tablets",
       "brandName": {
-        "cn": "布布",
-        "en": "Bubu"
+        "cn": "开瑞坦",
+        "en": "Claritin"
       },
       "category": "化学药品",
-      "formulation": "混悬液",
-      "specification": "100ml:2g",
-      "mahName": "强生（中国）投资有限公司",
-      "manufacturerName": "Johnson & Johnson GmbH",
-      "isOriginal": false,
-      "originator": "GlaxoSmithKline plc",
-      "approvalDate": "2020-03-20",
+      "formulation": "片剂",
+      "specification": "10mg",
+      "packageSpec": "6片/盒",
+      "mahName": "拜耳医药（上海）有限公司",
+      "manufacturerName": "拜耳医药保健有限公司启东分公司",
+      "isOriginal": true,
+      "originator": "Schering-Plough Corporation",
+      "originatorSource": [
+        {
+          "type": "FDA橙皮书",
+          "url": "https://www.accessdata.fda.gov/scripts/cder/ob/"
+        },
+        {
+          "type": "企业年报",
+          "url": "https://www.merck.com/"
+        }
+      ],
+      "approvalDate": "2007-11-06",
       "lastUpdated": "2025-03-17",
-      "isOTC": true
+      "isOTC": true,
+      "imageUrl": "https://raw.githubusercontent.com/dongzhenye/yuanyanyao/main/images/clarityne.jpg"
     },
     {
       "id": "10",
