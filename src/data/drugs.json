@@ -88,6 +88,12 @@
       "manufacturerName": "北京嘉林药业股份有限公司",
       "isOriginal": false,
       "originator": "Pfizer Inc.",
+      "originatorSource": [
+        {
+          "type": "药监局公告",
+          "url": "https://www.nmpa.gov.cn/"
+        }
+      ],
       "originalException": "原研专利到期仿制",
       "approvalDate": "2022-08-30",
       "lastUpdated": "2025-03-17",
@@ -232,6 +238,7 @@
       "id": "8",
       "registrationType": "境内生产药品",
       "identifier": "国药准字H20023156",
+      "approvalNumber": "国药准字H20023156",
       "inn": "Ibuprofen",
       "genericName": "布洛芬",
       "productName": "布洛芬片",
@@ -242,6 +249,7 @@
       "category": "化学药品",
       "formulation": "片剂",
       "specification": "0.2g",
+      "packageSpec": "20片/盒",
       "mahName": "中美天津史克制药有限公司",
       "manufacturerName": "中美天津史克制药有限公司",
       "isOriginal": true,
@@ -296,7 +304,8 @@
     {
       "id": "10",
       "registrationType": "境外生产药品",
-      "identifier": "国药准字H20180088",
+      "identifier": "国药准字HJ20180088",
+      "registrationNumber": "国药准字HJ20180088",
       "inn": "Oseltamivir",
       "genericName": "磷酸奥司他韦",
       "productName": "磷酸奥司他韦胶囊",
@@ -308,6 +317,7 @@
       "category": "化学药品",
       "formulation": "胶囊",
       "specification": "75mg",
+      "packageSpec": "10粒/盒",
       "mahName": "Roche Pharma (Schweiz) AG",
       "manufacturerName": "F. Hoffmann-La Roche Ltd",
       "isOriginal": true,
@@ -327,6 +337,7 @@
       "id": "11",
       "registrationType": "境内生产药品",
       "identifier": "国药准字H20160001",
+      "approvalNumber": "国药准字H20160001",
       "inn": "Acetylsalicylic acid",
       "genericName": "阿司匹林",
       "productName": "阿司匹林肠溶片",
@@ -338,10 +349,17 @@
       "category": "化学药品",
       "formulation": "肠溶片",
       "specification": "100mg*30片",
+      "packageSpec": "30片/盒",
       "mahName": "拜耳医药保健有限公司",
       "manufacturerName": "拜耳医药保健有限公司",
       "isOriginal": true,
       "originator": "Bayer AG",
+      "originatorSource": [
+        {
+          "type": "药监局公告",
+          "url": "https://www.nmpa.gov.cn/"
+        }
+      ],
       "approvalDate": "2016-01-01",
       "lastUpdated": "2025-03-17",
       "isOTC": true,
@@ -351,6 +369,7 @@
       "id": "12",
       "registrationType": "境内生产药品",
       "identifier": "国药准字H20160002",
+      "approvalNumber": "国药准字H20160002",
       "inn": "Ibuprofen",
       "genericName": "布洛芬",
       "productName": "布洛芬缓释胶囊",
@@ -362,10 +381,17 @@
       "category": "化学药品",
       "formulation": "胶囊",
       "specification": "200mg*20粒",
+      "packageSpec": "20粒/盒",
       "mahName": "强生制药有限公司",
       "manufacturerName": "强生制药有限公司",
       "isOriginal": true,
       "originator": "Johnson & Johnson",
+      "originatorSource": [
+        {
+          "type": "药监局公告",
+          "url": "https://www.nmpa.gov.cn/"
+        }
+      ],
       "approvalDate": "2016-02-01",
       "lastUpdated": "2025-03-17",
       "isOTC": true,
@@ -375,6 +401,7 @@
       "id": "13",
       "registrationType": "境内生产药品",
       "identifier": "国药准字H20160003",
+      "approvalNumber": "国药准字H20160003",
       "inn": "Ceftriaxone",
       "genericName": "头孢曲松钠",
       "productName": "注射用头孢曲松钠",
@@ -386,13 +413,21 @@
       "category": "化学药品",
       "formulation": "注射剂",
       "specification": "1.0g*10支",
+      "packageSpec": "10支/盒",
       "mahName": "罗氏制药有限公司",
       "manufacturerName": "罗氏制药有限公司",
       "isOriginal": true,
       "originator": "Roche",
+      "originatorSource": [
+        {
+          "type": "药监局公告",
+          "url": "https://www.nmpa.gov.cn/"
+        }
+      ],
       "approvalDate": "2016-03-01",
       "lastUpdated": "2025-03-17",
-      "isOTC": false
+      "isOTC": false,
+      "imageUrl": "https://raw.githubusercontent.com/dongzhenye/yuanyanyao/main/images/rocephin.jpg"
     }
   ],
   "meta": {
